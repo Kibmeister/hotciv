@@ -40,7 +40,7 @@ public class TestAlphaCiv {
   private Game game;
 
   /** Fixture for alphaciv testing. */
-  @Before
+  //@Before
   public void setUp() {
     game = new GameImpl();
   }

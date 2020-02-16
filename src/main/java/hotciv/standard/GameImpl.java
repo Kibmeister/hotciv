@@ -2,45 +2,131 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-/** Skeleton implementation of HotCiv.
- 
-   This source code is from the book 
-     "Flexible, Reliable Software:
-       Using Patterns and Agile Development"
-     published 2010 by CRC Press.
-   Author: 
-     Henrik B Christensen 
-     Department of Computer Science
-     Aarhus University
-   
-   Please visit http://www.baerbak.com/ for further information.
+import java.util.ArrayList;
+import java.util.HashMap;
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
- 
-       http://www.apache.org/licenses/LICENSE-2.0
- 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+/**
+ * Skeleton implementation of HotCiv.
+ * <p>
+ * This source code is from the book
+ * "Flexible, Reliable Software:
+ * Using Patterns and Agile Development"
+ * published 2010 by CRC Press.
+ * Author:
+ * Henrik B Christensen
+ * Department of Computer Science
+ * Aarhus University
+ * <p>
+ * Please visit http://www.baerbak.com/ for further information.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-*/
+public class GameImpl implements Game {
 
-public class  GameImpl implements Game {
-  public Tile getTileAt( Position p ) { return null; }
-  public Unit getUnitAt( Position p ) { return null; }
-  public City getCityAt( Position p ) { return null; }
-  public Player getPlayerInTurn() { return null; }
-  public Player getWinner() { return null; }
-  public int getAge() { return 0; }
-  public boolean moveUnit( Position from, Position to ) {
-    return false;
-  }
-  public void endOfTurn() {}
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
-  public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}
+    private HashMap<Position, TileImpl> world = new HashMap<Position, TileImpl>();
+    private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
+    private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+    private int gameAge;
+    private Player playerInTurn;
+
+    public GameImpl() {
+        playerInTurn = Player.RED;
+        gameAge = -4000;
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                createTile(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+            }
+        }
+
+        createTile(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
+        createTile(new Position(0, 1), new TileImpl(GameConstants.HILLS));
+        createTile(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
+
+        createCity(new Position(4, 1), new CityImpl(Player.BLUE));
+        createCity(new Position(1, 1), new CityImpl(Player.RED));
+
+        createUnit(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+        createUnit(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER));
+        createUnit(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER));
+
+    }
+
+    public void createUnit(Position p, UnitImpl u) {
+        units.put(p, u);
+    }
+
+    public void createCity(Position p, CityImpl c) {
+        cities.put(p, c);
+    }
+
+    City c = new CityImpl(Player.RED);
+
+
+    public Tile getTileAt(Position p) {
+        return world.get(p);
+    }
+
+    public Unit getUnitAt(Position p) {
+        return units.get(p);
+    }
+
+    public City getCityAt(Position p) {
+        return cities.get(p);
+    }
+
+    public Player getPlayerInTurn() {
+        return playerInTurn;
+    }
+
+    public Player getWinner() {
+        if (gameAge == -3000) {
+            return Player.RED;
+        }
+        return null;
+    }
+
+    public int getAge() {
+        return gameAge;
+    }
+
+    public boolean moveUnit(Position from, Position to) {
+        if (!world.get(to).getTypeString().equals(GameConstants.MOUNTAINS)
+                && units.get(from).getOwner() == getPlayerInTurn()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void endOfTurn() {
+        if (playerInTurn == Player.RED) {
+            playerInTurn = Player.BLUE;
+        } else {
+            playerInTurn = Player.RED;
+        }
+        gameAge += 100;
+    }
+
+    public void changeWorkForceFocusInCityAt(Position p, String balance) {
+    }
+
+    public void changeProductionInCityAt(Position p, String unitType) {
+    }
+
+    public void performUnitActionAt(Position p) {
+    }
+
+    public void createTile(Position p, TileImpl t) {
+        world.put(p, t);
+    }
 }

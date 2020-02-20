@@ -101,9 +101,25 @@ public class GameImpl implements Game {
     }
 
     public boolean moveUnit(Position from, Position to) {
-        if (!world.get(to).getTypeString().equals(GameConstants.MOUNTAINS)
-                && units.get(from).getOwner() == getPlayerInTurn()) {
+        if (!world.get(to).getTypeString().equals(GameConstants.MOUNTAINS) //there is no mountain at to tile
+                && units.get(from).getOwner() == getPlayerInTurn()          // acting player is player in turn
+                && world.containsKey(to)                                    // to position is within the scope of the world
+                && tileAdjacent(from, to)                                   // checks if to tile is within the "1" distance range
+                && !world.get(to).getTypeString().equals(GameConstants.OCEANS)) {
+
+            createUnit(to, units.get(from));                                // create the new unit
+            units.get(to).setMoveCount(0);
+            endOfTurn();
             return true;
+        }
+        return false;
+    }
+
+    public boolean tileAdjacent(Position from, Position to) {
+        for (Position p : hotciv.framework.Utility.get8neighborhoodOf(from)) {
+            if (p.equals(to)) {
+                return true;
+            }
         }
         return false;
     }
@@ -114,6 +130,7 @@ public class GameImpl implements Game {
         } else {
             playerInTurn = Player.RED;
         }
+
         gameAge += 100;
     }
 

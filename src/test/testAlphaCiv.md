@@ -6,19 +6,39 @@ Test list for HotCiv Alpha
 [OK] Blue has a city at (4.1)
 
 [OK] Units cannot move over mountains
+[OK] Unit cannot move over oceans
 [OK] Red has an archer at (2,0)
 [OK] Blue has noe legion at (3,2)
 [OK] Red has a settler at (4,3)
 [OK] Red cannot move blues units
 [OK] Only player in turn can move units/attack
+[OK] Attacking player always wins, regardless of defensive/attacking strength
+[OK] Blue's unit attack and destroy Reds unit
+[OK] Red's unit attack and destroy Blues unit
+[OK] A unit can only move 1 distance between two tiles
+[]  A unit can only move if its move count is over 0
+[] When the round starts, each unit is initialized to their maximal moves count
+
 [] cities produce 6 production after a round has ended
 [] cities population size is always 1
-[-] After Red it is Blue that is in turn
+[OK] After Red it is Blue that is in turn
 [OK] Red wins in year 3000 BC
 [OK] Game starts in age 4000 BC
 [Ok] Game advances 100 years per round
-[] Red's unit attack and destroy Blues unit
+
 [] No unit action
+[] When a unit has accumulated enough it produces the unit selected for production
+[] The units cost is the deducted from the cities treasury
+[] The unit is placed in the city, if no other city is present
+[] Otherwise, the unit is placed on the first non-occupied adjacent tile - starting from the above tile, moving clockwise
+
+[] Red player can produce unit type archer
+[] Red player can produce unit type legion
+[] Red player can produce unit type settler
+[] Blue player can produce unit type archer
+[] Blue player can produce unit type legion
+[] Blue player can produce unit type settler
+
 [OK] world consists of 16x16 tiles, starting at index 0
 [OK] Tile of type Plain, should be of type Plain
 [OK] All tiles are of type plains in general
@@ -26,11 +46,7 @@ Test list for HotCiv Alpha
 [OK] Tile (0,1) is of type Hills
 [OK] Tile (2,2) is of type Mountains
 [] Cities stay at population 1
-[] Cities produce 5 production per round
-[] When a unit has accumulated enough it produces the unit selected for production
-[] The units cost is the deducted from the cities treasury
-[] The unit is placed in the city, if no other city is present
-[] Otherwise, the unit is placed on the first non-occupied adjacent tile - starting from the above tile, moving clockwise
+[] Cities produce 6 production per round
 
 []
 

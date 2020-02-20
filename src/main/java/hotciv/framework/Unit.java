@@ -63,4 +63,8 @@ public interface Unit {
    * @return attack strength
    */
   public int getAttackingStrength();
+  /** set movesCount to the parameter passed */
+  public void setMoveCount (int i);
+
+
 }

@@ -173,6 +173,53 @@ public class TestAlphaCiv {
         game.endOfTurn();
         assertThat(game.getPlayerInTurn(), is(Player.BLUE));
     }
+    @Test
+    public void blueUnitAt3dot2AttacksAndDefeatsRedUnitAt4dot3 (){
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        assertTrue(game.moveUnit(new Position(3,2), new Position(4,3)));
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.BLUE));
+    }
+    @Test
+    public void redUnitAt4dot3AttacksAndDefeatsBluesUnitAt3dot2 (){
+        assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
+        game.moveUnit(new Position (4,3), new Position(3,2));
+        assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.RED));
+
+    }
+    @Test
+    public void anArcherCanOnlyMoveOneDistanceBetweenTwoTiles () {
+        assertThat(game.getUnitAt(new Position(2,0)).getTypeString(), is(GameConstants.ARCHER));
+        assertFalse(game.moveUnit(new Position(2,0), new Position(4,0)));
+    }
+    @Test
+    public void unitCanNotMoveOverOceanAt1dot0 (){
+        assertThat(game.getTileAt(new Position(1,0)).getTypeString(), is(GameConstants.OCEANS));
+        assertFalse(game.moveUnit(new Position(2,0), new Position(1,0)));
+    }
+    @Test
+    public void moveCountHasToBeLargerThan0ForTheUnitToMove () {
+        assertThat(game.getUnitAt(new Position(4,3)), is(notNullValue()));
+        assertFalse(game.moveUnit(new Position(4,3), new Position(4,4)));
+    }
+    @Test
+    public void moveCountIsDeductedFromUnitAfterMove() {
+        assertThat(game.getUnitAt(new Position(3,2)).getMoveCount(), is(1));
+        game.moveUnit(new Position(3,2), new Position(3,3));
+        assertThat(game.getUnitAt(new Position(3,3)), is(notNullValue()));
+        //assertThat(game.getUnitAt(new Position(3,3)).getMoveCount(), is(0));
+
+    }
+
+
+
+    @Test
+    public void unistAreInitializedToMaximalMoveCountAtStartOfEachRound (){
+
+    }
+
 
 
 }

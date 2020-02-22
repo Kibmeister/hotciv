@@ -37,12 +37,14 @@ public class GameImpl implements Game {
     private HashMap<Position, TileImpl> world = new HashMap<Position, TileImpl>();
     private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
     private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-    private int gameAge;
+    private int gameAge, roundCounter;
     private Player playerInTurn;
+
 
     public GameImpl() {
         playerInTurn = Player.RED;
         gameAge = -4000;
+        roundCounter = 0;
         for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
             for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
                 createTile(new Position(i, j), new TileImpl(GameConstants.PLAINS));
@@ -62,22 +64,12 @@ public class GameImpl implements Game {
 
     }
 
-    public void createUnit(Position p, UnitImpl u) {
-        units.put(p, u);
-    }
-
-    public void createCity(Position p, CityImpl c) {
-        cities.put(p, c);
-    }
-
-    City c = new CityImpl(Player.RED);
-
 
     public Tile getTileAt(Position p) {
         return world.get(p);
     }
 
-    public Unit getUnitAt(Position p) {
+    public UnitImpl getUnitAt(Position p) {
         return units.get(p);
     }
 
@@ -101,18 +93,23 @@ public class GameImpl implements Game {
     }
 
     public boolean moveUnit(Position from, Position to) {
-        if (!world.get(to).getTypeString().equals(GameConstants.MOUNTAINS) //there is no mountain at to tile
+        if (!world.get(to).getTypeString().equals(GameConstants.MOUNTAINS) // there is no mountain at to tile
                 && units.get(from).getOwner() == getPlayerInTurn()          // acting player is player in turn
                 && world.containsKey(to)                                    // to position is within the scope of the world
                 && tileAdjacent(from, to)                                   // checks if to tile is within the "1" distance range
                 && !world.get(to).getTypeString().equals(GameConstants.OCEANS)) {
 
             createUnit(to, units.get(from));                                // create the new unit
-            units.get(to).setMoveCount(0);
+
+            units.get(to).setMoveCount(0);                                  // deduct the moveCount
+
+            units.remove(from);                                               // removes the unit at from position as it moves
+
             endOfTurn();
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public boolean tileAdjacent(Position from, Position to) {
@@ -125,6 +122,7 @@ public class GameImpl implements Game {
     }
 
     public void endOfTurn() {
+        roundCounter ++;
         if (playerInTurn == Player.RED) {
             playerInTurn = Player.BLUE;
         } else {
@@ -146,4 +144,13 @@ public class GameImpl implements Game {
     public void createTile(Position p, TileImpl t) {
         world.put(p, t);
     }
+
+    public void createUnit(Position p, UnitImpl u) {
+        units.put(p, u);
+    }
+
+    public void createCity(Position p, CityImpl c) {
+        cities.put(p, c);
+    }
+
 }

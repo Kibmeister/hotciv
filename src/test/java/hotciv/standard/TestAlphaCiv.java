@@ -200,23 +200,37 @@ public class TestAlphaCiv {
         assertFalse(game.moveUnit(new Position(2,0), new Position(1,0)));
     }
     @Test
-    public void moveCountHasToBeLargerThan0ForTheUnitToMove () {
-        assertThat(game.getUnitAt(new Position(4,3)), is(notNullValue()));
-        assertFalse(game.moveUnit(new Position(4,3), new Position(4,4)));
+    public void moveUnitActuallyMovesTheUnit () {
+        game.endOfTurn();
+        game.createUnit(new Position(4,4), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+        assertThat(game.getUnitAt(new Position(4,4)).getTypeString(), is(GameConstants.LEGION));
+        game.moveUnit(new Position(4,4 ), new Position(4,5));
+        assertThat(game.getUnitAt(new Position(4,5)).getTypeString(), is(GameConstants.LEGION));
     }
     @Test
     public void moveCountIsDeductedFromUnitAfterMove() {
         assertThat(game.getUnitAt(new Position(3,2)).getMoveCount(), is(1));
+        game.endOfTurn();
         game.moveUnit(new Position(3,2), new Position(3,3));
-        assertThat(game.getUnitAt(new Position(3,3)), is(notNullValue()));
-        //assertThat(game.getUnitAt(new Position(3,3)).getMoveCount(), is(0));
+        assertThat(game.getUnitAt(new Position(3,3)).getMoveCount(), is(0));
 
     }
+    @Test
+    public void moveCountHasToBeLargerThan0ForTheUnitToMove () {
+        assertThat(game.getUnitAt(new Position(4,3)).getMoveCount(), is(1));
+        game.moveUnit(new Position(4,3), new Position( 4,2));
+        assertThat(game.getUnitAt(new Position(4,2)).getMoveCount(), is(0));
+        assertFalse(game.moveUnit(new Position(4,2), new Position(5,3)));
 
-
-
+    }
     @Test
     public void unistAreInitializedToMaximalMoveCountAtStartOfEachRound (){
+        assertThat(game.getUnitAt(new Position(4,3)), is(notNullValue()));
+        game.moveUnit(new Position(4,3), new Position(5,4));
+        assertThat(game.getUnitAt(new Position(5,4)).getMoveCount(), is(0));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(5,4)).getMoveCount(), is(1));
 
     }
 

@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import javax.swing.plaf.synth.SynthEditorPaneUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,14 +38,13 @@ public class GameImpl implements Game {
     private HashMap<Position, TileImpl> world = new HashMap<Position, TileImpl>();
     private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
     private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-    private int gameAge, roundCounter;
+    private int gameAge;
     private Player playerInTurn;
 
 
     public GameImpl() {
         playerInTurn = Player.RED;
         gameAge = -4000;
-        roundCounter = 0;
         for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
             for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
                 createTile(new Position(i, j), new TileImpl(GameConstants.PLAINS));
@@ -101,8 +101,7 @@ public class GameImpl implements Game {
 
             createUnit(to, units.get(from));                                // create the new unit
 
-            units.get(to).setMoveCount(0);                                  // deduct the moveCount
-
+            units.get(to).setMoveCount(units.get(to).getMoveCount() - 1);                                  // deduct the moveCount
             units.remove(from);                                               // removes the unit at from position as it moves
 
             endOfTurn();
@@ -122,13 +121,14 @@ public class GameImpl implements Game {
     }
 
     public void endOfTurn() {
-        roundCounter ++;
         if (playerInTurn == Player.RED) {
             playerInTurn = Player.BLUE;
         } else {
             playerInTurn = Player.RED;
+            for (UnitImpl u: units.values()) {
+                u.setMoveCount(1);
+            }
         }
-
         gameAge += 100;
     }
 

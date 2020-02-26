@@ -209,10 +209,10 @@ public class TestAlphaCiv {
     }
     @Test
     public void moveCountIsDeductedFromUnitAfterMove() {
-        assertThat(game.getUnitAt(new Position(3,2)).getMoveCount(), is(1));
-        game.endOfTurn();
-        game.moveUnit(new Position(3,2), new Position(3,3));
-        assertThat(game.getUnitAt(new Position(3,3)).getMoveCount(), is(0));
+        assertThat(game.getUnitAt(new Position(4,3)).getMoveCount(), is(1));
+        game.moveUnit(new Position(4,3), new Position(5,4));
+        assertThat(game.getUnitAt(new Position(5,4)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(5,4)).getMoveCount(), is(0));
 
     }
     @Test
@@ -233,6 +233,62 @@ public class TestAlphaCiv {
         assertThat(game.getUnitAt(new Position(5,4)).getMoveCount(), is(1));
 
     }
+    @Test
+    public void citiesProduce6ProductionAfterEachRound() {
+        assertThat(game.getCityAt(new Position(1,1)), is(notNullValue()));
+        assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(0));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(6));
+    }
+    @Test
+    public void citiesPopulationSizeIsAlways1 () {
+        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
+    }
+
+    @Test
+    public void shouldSetProductionFocusForACity (){
+        assertThat(game.getCityAt(new Position(1,1)), is(notNullValue()));
+        game.getCityAt(new Position(1,1)).setProduction(GameConstants.ARCHER);
+        assertThat(game.getCityAt(new Position(1,1)).getProduction(), is(GameConstants.ARCHER));
+    }
+
+    @ Test
+    public void citiesAccumulateProductionOverMoreRounds(){
+        assertThat(game.getCityAt(new Position(4,1)), is(notNullValue())); // there is a city at 4,3
+        game.getCityAt(new Position(4,1)).setProduction(GameConstants.ARCHER);
+        for(int i = 0; i < 4; i ++){ //calculating two round
+            game.endOfTurn();
+        }
+        assertThat(game.getCityAt(new Position(4,1)).getTreasury(), is(12));
+
+    }
+
+    @Test
+    public void aCityPlacesTheUnitSetForProductionInTheCityIfNoOtherUnitPresent () {
+        assertThat(game.getCityAt(new Position(1,1)),is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(1,1)), is(nullValue()));
+        game.getCityAt(new Position(1,1)).setProduction(GameConstants.ARCHER);
+        for(int i = 0; i < 4; i++){
+            game.endOfTurn();
+        }
+        assertNotNull(game.getUnitAt(new Position(1,1)));
+    }
+
+
+
+  // @Test
+    public void whenACityHasAccumulatedEnoughProductionItProducesTheUnitSetForProduction () {
+        assertThat(game.getCityAt(new Position(4,1)), is(notNullValue())); // there is a city at 4,3
+        game.getCityAt(new Position(4,1)).setProduction(GameConstants.ARCHER);
+        for(int i = 0; i < 4; i ++){ //calculating two round
+            game.endOfTurn();
+        }
+        //assertThat(game.getCityAt());
+   }
 
 
 

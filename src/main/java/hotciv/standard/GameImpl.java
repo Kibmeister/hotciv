@@ -128,8 +128,27 @@ public class GameImpl implements Game {
             for (UnitImpl u: units.values()) {
                 u.setMoveCount(1);
             }
+            for(CityImpl c : cities.values()){
+                c.setTreasury(6);
+            }
+            produceUnits();
         }
         gameAge += 100;
+    }
+
+    public void produceUnits() {
+        // løpe igjennom alle cities
+        // sjekke hver by for om det er nok treasury til å produsere den bestemte unit typen bestemt
+        // hvis byen har nok treasury for den bestemte unit, produser unit'n i byen hvis det ikke er en unit
+        // - der fra før av. Etter unit'n er produsert, trekkes unitens produksjons kost fra byen treasury
+        for(CityImpl c: cities.values()){
+            if(c.getTreasury() >= 10); { // hva en archer koster
+                if(units.get(new Position(1,1)) ) // hvis det ikke er en unit på byen plassering
+                createUnit(new Position(1,1), new UnitImpl(playerInTurn, c.getProduction())); // produser byen
+                c.setTreasury(- /*unit cost*/);
+            }
+        }
+
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {

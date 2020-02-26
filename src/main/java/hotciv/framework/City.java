@@ -62,4 +62,11 @@ public interface City {
    */
   public String getWorkforceFocus();
 
+
+  /** set the amount of treasury each city has after a round has ended.*/
+
+  public void setTreasury (int treasury);
+
+  public void setProduction (String t);
+
 }

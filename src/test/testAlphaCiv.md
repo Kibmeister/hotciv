@@ -19,17 +19,20 @@ Test list for HotCiv Alpha
 [OK] Move unit actually moves a unit
 [OK]  A unit can only move if its move count is over 0
 [OK] The move count of a unit is deducted after a move
-[] When the round starts, each unit is initialized to their maximal moves count
+[OK] When the round starts, each unit is initialized to their maximal moves count
 
-[] cities produce 6 production after a round has ended
-[] cities population size is always 1
+[OK] cities produce 6 production after a round has ended
+[OK] cities population size is always 1
 [OK] After Red it is Blue that is in turn
 [OK] Red wins in year 3000 BC
 [OK] Game starts in age 4000 BC
 [Ok] Game advances 100 years per round
 
-[] No unit action
-[] When a unit has accumulated enough it produces the unit selected for production
+
+[OK] Set production focus for a city
+[OK] Cities accumulate production over more rounds
+[] A city places the unit set for production in the city if no other unit present
+[] When a city has accumulated enough it produces the unit selected for production
 [] The units cost is the deducted from the cities treasury
 [] The unit is placed in the city, if no other city is present
 [] Otherwise, the unit is placed on the first non-occupied adjacent tile - starting from the above tile, moving clockwise

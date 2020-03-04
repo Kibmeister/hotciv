@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import javafx.geometry.Pos;
 
 import javax.swing.plaf.synth.SynthEditorPaneUI;
 import java.util.ArrayList;
@@ -61,11 +62,12 @@ public class GameImpl implements Game {
         createUnit(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
         createUnit(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER));
         createUnit(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER));
+        createUnit(new Position(1, 1), new UnitImpl(Player.RED, GameConstants.SETTLER));
 
     }
 
 
-    public Tile getTileAt(Position p) {
+    public TileImpl getTileAt(Position p) {
         return world.get(p);
     }
 
@@ -73,7 +75,7 @@ public class GameImpl implements Game {
         return units.get(p);
     }
 
-    public City getCityAt(Position p) {
+    public CityImpl getCityAt(Position p) {
         return cities.get(p);
     }
 
@@ -125,11 +127,8 @@ public class GameImpl implements Game {
             playerInTurn = Player.BLUE;
         } else {
             playerInTurn = Player.RED;
-            for (UnitImpl u: units.values()) {
+            for (UnitImpl u : units.values()) {
                 u.setMoveCount(1);
-            }
-            for(CityImpl c : cities.values()){
-                c.setTreasury(6);
             }
             produceUnits();
         }
@@ -137,19 +136,31 @@ public class GameImpl implements Game {
     }
 
     public void produceUnits() {
-        // løpe igjennom alle cities
-        // sjekke hver by for om det er nok treasury til å produsere den bestemte unit typen bestemt
-        // hvis byen har nok treasury for den bestemte unit, produser unit'n i byen hvis det ikke er en unit
-        // - der fra før av. Etter unit'n er produsert, trekkes unitens produksjons kost fra byen treasury
-        for(CityImpl c: cities.values()){
-            if(c.getTreasury() >= 10); { // hva en archer koster
-                if(units.get(new Position(1,1)) ) // hvis det ikke er en unit på byen plassering
-                createUnit(new Position(1,1), new UnitImpl(playerInTurn, c.getProduction())); // produser byen
-                c.setTreasury(- /*unit cost*/);
-            }
-        }
 
+        for (Position p : cities.keySet()) {
+            CityImpl c = getCityAt(p);
+             c.setTreasury(6);
+
+           if (c.getTreasury() >= GameConstants.getUnitCost(c.getProduction())) {               //hvis nok penger
+                c.setTreasury(c.getTreasury() - GameConstants.getUnitCost(c.getProduction()));  //trekk prisen fra
+                if (!units.containsKey(p)) {                                                    //hvis ingen unit
+                   createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));                //lag en by
+                }
+                else {                                                                          //hvis det er en unit i byen
+                    for (Position u : Utility.get8neighborhoodOf(p)) {                          //sirkle om byen
+                        if (!units.containsKey(u)) {                                            //hvis byen ikke har nabo units
+                             createUnit(u, new UnitImpl(c.getOwner(), c.getProduction()));      //lag units på alle de flisene 
+
+                        }
+
+                    }
+                }
+
+            }
+              
+       }
     }
+
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
     }

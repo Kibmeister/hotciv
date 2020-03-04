@@ -268,13 +268,34 @@ public class TestAlphaCiv {
     }
 
     @Test
+    public void getUnitCostOfArcherIs10(){
+        assertThat(game.getUnitAt(new Position(2,0)).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(GameConstants.getUnitCost(GameConstants.ARCHER), is(10));
+    }
+    @Test
+    public void aCityPlacesTheUnitSetForProductionAroundTheæCityWhenUnitIsAlreadyPresent () {
+        assertThat(game.getCityAt(new Position(1,1)),is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(1,1)), is(notNullValue()));
+        game.getCityAt(new Position(1,1)).setProduction(GameConstants.ARCHER);
+        game.getCityAt(new Position(1,1 )).setTreasury(10);
+        game.endOfTurn();
+        //game.endOfTurn();
+        assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(0));
+        assertNotNull(game.getUnitAt(new Position(1,1)));
+    }
+
+
+
+
+  //  @Test
     public void aCityPlacesTheUnitSetForProductionInTheCityIfNoOtherUnitPresent () {
         assertThat(game.getCityAt(new Position(1,1)),is(notNullValue()));
         assertThat(game.getUnitAt(new Position(1,1)), is(nullValue()));
         game.getCityAt(new Position(1,1)).setProduction(GameConstants.ARCHER);
-        for(int i = 0; i < 4; i++){
-            game.endOfTurn();
-        }
+        game.getCityAt(new Position(1,1 )).setTreasury(10);
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(0));
         assertNotNull(game.getUnitAt(new Position(1,1)));
     }
 

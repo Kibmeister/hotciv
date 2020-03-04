@@ -31,7 +31,8 @@ Test list for HotCiv Alpha
 
 [OK] Set production focus for a city
 [OK] Cities accumulate production over more rounds
-[] A city places the unit set for production in the city if no other unit present
+[-] A city places the unit set for production in the city if no other unit present
+[OK] Unit cost of an archer is 10
 [] When a city has accumulated enough it produces the unit selected for production
 [] The units cost is the deducted from the cities treasury
 [] The unit is placed in the city, if no other city is present

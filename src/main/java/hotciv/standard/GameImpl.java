@@ -56,8 +56,9 @@ public class GameImpl implements Game {
         createTile(new Position(0, 1), new TileImpl(GameConstants.HILLS));
         createTile(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
 
-        createCity(new Position(4, 1), new CityImpl(Player.BLUE));
         createCity(new Position(1, 1), new CityImpl(Player.RED));
+        createCity(new Position(4, 1), new CityImpl(Player.BLUE));
+
 
         createUnit(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
         createUnit(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER));
@@ -139,9 +140,10 @@ public class GameImpl implements Game {
 
         for (Position p : cities.keySet()) {
             CityImpl c = getCityAt(p);
-             c.setTreasury(6);
 
-           if (c.getTreasury() >= GameConstants.getUnitCost(c.getProduction())) {               //hvis nok penger
+            System.out.println(cities.keySet());
+            c.setTreasury(6);
+          if (c.getTreasury() >= GameConstants.getUnitCost(c.getProduction()) && !c.getProduction().equals("No unit type")) {               //hvis nok penger
                 c.setTreasury(c.getTreasury() - GameConstants.getUnitCost(c.getProduction()));  //trekk prisen fra
                 if (!units.containsKey(p)) {                                                    //hvis ingen unit
                    createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));                //lag en by
@@ -150,14 +152,12 @@ public class GameImpl implements Game {
                     for (Position u : Utility.get8neighborhoodOf(p)) {                          //sirkle om byen
                         if (!units.containsKey(u)) {                                            //hvis byen ikke har nabo units
                              createUnit(u, new UnitImpl(c.getOwner(), c.getProduction()));      //lag units på alle de flisene 
-
+                              System.out.println(getUnitAt(u));
                         }
-
                     }
                 }
 
             }
-              
        }
     }
 

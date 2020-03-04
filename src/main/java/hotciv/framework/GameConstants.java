@@ -48,14 +48,15 @@ public class GameConstants {
 
     public static int getUnitCost(String production) {
         switch (production) {
-            case GameConstants.ARCHER:
+            case ARCHER:
                 return 10;
-            case GameConstants.LEGION:
+            case LEGION:
                 return 15;
-            case GameConstants.SETTLER:
+            case SETTLER:
                 return 30;
             default:
                 return 0;
+
         }
     }
 }

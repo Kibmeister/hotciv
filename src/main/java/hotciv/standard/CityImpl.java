@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.City;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
 public class CityImpl implements City {
@@ -12,6 +13,7 @@ public class CityImpl implements City {
     public CityImpl(Player cityOwner){
         this.cityOwner = cityOwner;
         this.population = 1;
+        this.production = GameConstants.ARCHER;
     }
 
     @Override

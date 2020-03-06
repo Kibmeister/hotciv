@@ -1,5 +1,6 @@
 package hotciv.framework;
 
+import hotciv.standard.CityImpl;
 import hotciv.standard.UnitImpl;
 
 /** Game is the central interface allowing a client to access and
@@ -142,4 +143,6 @@ public interface Game {
    * @param u the unit unit that is to be created
   */
   public void createUnit(Position p, UnitImpl u);
+
+  public void createCity(Position p, CityImpl c);
 }

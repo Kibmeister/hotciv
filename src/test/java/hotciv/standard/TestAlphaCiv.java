@@ -173,146 +173,257 @@ public class TestAlphaCiv {
         game.endOfTurn();
         assertThat(game.getPlayerInTurn(), is(Player.BLUE));
     }
+
     @Test
-    public void blueUnitAt3dot2AttacksAndDefeatsRedUnitAt4dot3 (){
+    public void blueUnitAt3dot2AttacksAndDefeatsRedUnitAt4dot3() {
         game.endOfTurn();
-        assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.BLUE));
-        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
-        assertTrue(game.moveUnit(new Position(3,2), new Position(4,3)));
-        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(3, 2)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(4, 3)).getOwner(), is(Player.RED));
+        assertTrue(game.moveUnit(new Position(3, 2), new Position(4, 3)));
+        assertThat(game.getUnitAt(new Position(4, 3)).getOwner(), is(Player.BLUE));
     }
+
     @Test
-    public void redUnitAt4dot3AttacksAndDefeatsBluesUnitAt3dot2 (){
-        assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.BLUE));
-        assertThat(game.getUnitAt(new Position(4,3)).getOwner(), is(Player.RED));
-        game.moveUnit(new Position (4,3), new Position(3,2));
-        assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.RED));
+    public void redUnitAt4dot3AttacksAndDefeatsBluesUnitAt3dot2() {
+        assertThat(game.getUnitAt(new Position(3, 2)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(4, 3)).getOwner(), is(Player.RED));
+        game.moveUnit(new Position(4, 3), new Position(3, 2));
+        assertThat(game.getUnitAt(new Position(3, 2)).getOwner(), is(Player.RED));
 
     }
+
     @Test
-    public void anArcherCanOnlyMoveOneDistanceBetweenTwoTiles () {
-        assertThat(game.getUnitAt(new Position(2,0)).getTypeString(), is(GameConstants.ARCHER));
-        assertFalse(game.moveUnit(new Position(2,0), new Position(4,0)));
+    public void anArcherCanOnlyMoveOneDistanceBetweenTwoTiles() {
+        assertThat(game.getUnitAt(new Position(2, 0)).getTypeString(), is(GameConstants.ARCHER));
+        assertFalse(game.moveUnit(new Position(2, 0), new Position(4, 0)));
     }
+
     @Test
-    public void unitCanNotMoveOverOceanAt1dot0 (){
-        assertThat(game.getTileAt(new Position(1,0)).getTypeString(), is(GameConstants.OCEANS));
-        assertFalse(game.moveUnit(new Position(2,0), new Position(1,0)));
+    public void unitCanNotMoveOverOceanAt1dot0() {
+        assertThat(game.getTileAt(new Position(1, 0)).getTypeString(), is(GameConstants.OCEANS));
+        assertFalse(game.moveUnit(new Position(2, 0), new Position(1, 0)));
     }
+
     @Test
-    public void moveUnitActuallyMovesTheUnit () {
+    public void moveUnitActuallyMovesTheUnit() {
         game.endOfTurn();
-        game.createUnit(new Position(4,4), new UnitImpl(Player.BLUE, GameConstants.LEGION));
-        assertThat(game.getUnitAt(new Position(4,4)).getTypeString(), is(GameConstants.LEGION));
-        game.moveUnit(new Position(4,4 ), new Position(4,5));
-        assertThat(game.getUnitAt(new Position(4,5)).getTypeString(), is(GameConstants.LEGION));
+        game.createUnit(new Position(4, 4), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+        assertThat(game.getUnitAt(new Position(4, 4)).getTypeString(), is(GameConstants.LEGION));
+        game.moveUnit(new Position(4, 4), new Position(4, 5));
+        assertThat(game.getUnitAt(new Position(4, 5)).getTypeString(), is(GameConstants.LEGION));
     }
+
     @Test
     public void moveCountIsDeductedFromUnitAfterMove() {
-        assertThat(game.getUnitAt(new Position(4,3)).getMoveCount(), is(1));
-        game.moveUnit(new Position(4,3), new Position(5,4));
-        assertThat(game.getUnitAt(new Position(5,4)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,4)).getMoveCount(), is(0));
+        assertThat(game.getUnitAt(new Position(4, 3)).getMoveCount(), is(1));
+        game.moveUnit(new Position(4, 3), new Position(5, 4));
+        assertThat(game.getUnitAt(new Position(5, 4)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(5, 4)).getMoveCount(), is(0));
 
     }
+
     @Test
-    public void moveCountHasToBeLargerThan0ForTheUnitToMove () {
-        assertThat(game.getUnitAt(new Position(4,3)).getMoveCount(), is(1));
-        game.moveUnit(new Position(4,3), new Position( 4,2));
-        assertThat(game.getUnitAt(new Position(4,2)).getMoveCount(), is(0));
-        assertFalse(game.moveUnit(new Position(4,2), new Position(5,3)));
+    public void moveCountHasToBeLargerThan0ForTheUnitToMove() {
+        assertThat(game.getUnitAt(new Position(4, 3)).getMoveCount(), is(1));
+        game.moveUnit(new Position(4, 3), new Position(4, 2));
+        assertThat(game.getUnitAt(new Position(4, 2)).getMoveCount(), is(0));
+        assertFalse(game.moveUnit(new Position(4, 2), new Position(5, 3)));
 
     }
+
     @Test
-    public void unistAreInitializedToMaximalMoveCountAtStartOfEachRound (){
-        assertThat(game.getUnitAt(new Position(4,3)), is(notNullValue()));
-        game.moveUnit(new Position(4,3), new Position(5,4));
-        assertThat(game.getUnitAt(new Position(5,4)).getMoveCount(), is(0));
+    public void unistAreInitializedToMaximalMoveCountAtStartOfEachRound() {
+        assertThat(game.getUnitAt(new Position(4, 3)), is(notNullValue()));
+        game.moveUnit(new Position(4, 3), new Position(5, 4));
+        assertThat(game.getUnitAt(new Position(5, 4)).getMoveCount(), is(0));
         game.endOfTurn();
         game.endOfTurn();
-        assertThat(game.getUnitAt(new Position(5,4)).getMoveCount(), is(1));
+        assertThat(game.getUnitAt(new Position(5, 4)).getMoveCount(), is(1));
 
     }
+
     @Test
     public void citiesProduce6ProductionAfterEachRound() {
-        assertThat(game.getCityAt(new Position(1,1)), is(notNullValue()));
-        assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(0));
+        assertThat(game.getCityAt(new Position(1, 1)), is(notNullValue()));
+        assertThat(game.getCityAt(new Position(1, 1)).getTreasury(), is(0));
         game.endOfTurn();
         game.endOfTurn();
-        assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(6));
-    }
-    @Test
-    public void citiesPopulationSizeIsAlways1 () {
-        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
-        game.endOfTurn();
-        game.endOfTurn();
-        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
+        assertThat(game.getCityAt(new Position(1, 1)).getTreasury(), is(6));
     }
 
     @Test
-    public void shouldSetProductionFocusForACity (){
-        assertThat(game.getCityAt(new Position(1,1)), is(notNullValue()));
-        game.getCityAt(new Position(1,1)).setProduction(GameConstants.ARCHER);
-        assertThat(game.getCityAt(new Position(1,1)).getProduction(), is(GameConstants.ARCHER));
+    public void citiesPopulationSizeIsAlways1() {
+        assertThat(game.getCityAt(new Position(1, 1)).getSize(), is(1));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getCityAt(new Position(1, 1)).getSize(), is(1));
     }
 
-    @ Test
-    public void citiesAccumulateProductionOverMoreRounds(){
-        assertThat(game.getCityAt(new Position(4,1)), is(notNullValue())); // there is a city at 4,3
-        game.getCityAt(new Position(4,1)).setProduction("No unit type");
+    @Test
+    public void shouldSetProductionFocusForACity() {
+        assertThat(game.getCityAt(new Position(1, 1)), is(notNullValue()));
+        game.getCityAt(new Position(1, 1)).setProduction(GameConstants.ARCHER);
+        assertThat(game.getCityAt(new Position(1, 1)).getProduction(), is(GameConstants.ARCHER));
+    }
+
+    @Test
+    public void citiesAccumulateProductionOverMoreRounds() {
+        assertThat(game.getCityAt(new Position(4, 1)), is(notNullValue())); // there is a city at 4,3
+        game.getCityAt(new Position(4, 1)).setProduction("No unit type");
         game.endOfTurn();
         game.endOfTurn();
-        assertThat(game.getCityAt(new Position(4,1)).getTreasury(), is(6));
+        assertThat(game.getCityAt(new Position(4, 1)).getTreasury(), is(6));
 
     }
 
     @Test
-    public void getUnitCostOfArcherIs10(){
-        assertThat(game.getUnitAt(new Position(2,0)).getTypeString(), is(GameConstants.ARCHER));
+    public void getUnitCostOfArcherIs10() {
+        assertThat(game.getUnitAt(new Position(2, 0)).getTypeString(), is(GameConstants.ARCHER));
         assertThat(GameConstants.getUnitCost(GameConstants.ARCHER), is(10));
     }
-     @Test
-    public void aCityPlacesTheUnitSetForProductionInTheCityIfNoOtherUnitPresent () {
-        assertThat(game.getCityAt(new Position(4,1)),is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(4,1)), is(nullValue()));
-        game.getCityAt(new Position(4,1)).setProduction(GameConstants.ARCHER);
-        game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
-        assertThat(game.getUnitAt(new Position(4,1 )), is(notNullValue()));
 
-    }
     @Test
-    public void aCityPlacesTheUnitSetForProductionAroundTheCityWhenUnitIsAlreadyPresent () {
-        assertThat(game.getCityAt(new Position(1,1)),is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(1,1)), is(notNullValue()));
-        game.getCityAt(new Position(1,1)).setProduction(GameConstants.ARCHER);
+    public void aCityPlacesTheUnitSetForProductionInTheCityIfNoOtherUnitPresent() {
+        assertThat(game.getCityAt(new Position(4, 1)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(4, 1)), is(nullValue()));
+        game.getCityAt(new Position(4, 1)).setProduction(GameConstants.ARCHER);
         game.endOfTurn();
         game.endOfTurn();
         game.endOfTurn();
         game.endOfTurn();
-        assertThat(game.getUnitAt(new Position(0,1)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(4, 1)), is(notNullValue()));
 
     }
 
+    @Test
+    public void aCityPlacesTheUnitSetForProductionAroundTheCityWhenUnitIsAlreadyPresent() {
+        assertThat(game.getCityAt(new Position(1, 1)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(1, 1)), is(notNullValue()));
+        game.getCityAt(new Position(1, 1)).setProduction(GameConstants.ARCHER);
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(0, 1)), is(notNullValue()));
 
+    }
 
+    @Test
+    public void whenAcityHasAccumulatedEnoughProductionItProducesUnitSetForProduction() {
+        assertThat(game.getCityAt(new Position(4, 1)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(4, 1)), is(nullValue()));
+        game.getCityAt(new Position(4, 1)).setProduction(GameConstants.LEGION);
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(4, 1)), is(nullValue()));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(4, 1)).getTypeString(), is(GameConstants.LEGION));
+    }
 
+    @Test
+    public void theUnitCostIsDeductedFromTheCitiesTreasury() {
+        assertThat(game.getCityAt(new Position(4, 1)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(4, 1)), is(nullValue()));
+        game.getCityAt(new Position(4, 1)).setProduction(GameConstants.LEGION);
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getCityAt(new Position(4, 1)).getTreasury(), is(6));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getCityAt(new Position(4, 1)).getTreasury(), is(12));
+        assertThat(game.getUnitAt(new Position(4, 1)), is(nullValue()));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(4, 1)).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getCityAt(new Position(4, 1)).getTreasury(), is(3));
+    }
 
+    @Test
+    public void shouldOnlyProduceOneUnitOnOneAdjacentTileToCityAt10dot10() {
+        game.createCity(new Position(10, 10), new CityImpl(Player.RED));
+        game.createUnit(new Position(10, 10), new UnitImpl(Player.RED, GameConstants.ARCHER));
+        game.endOfTurn();
+        game.endOfTurn();// 6
+        game.endOfTurn();
+        game.endOfTurn(); // 12
+        assertThat(game.getUnitAt(new Position(9, 10)).getTypeString(), is(GameConstants.ARCHER)); // 2
+        assertThat(game.getUnitAt(new Position(9, 11)), is(nullValue()));
+        assertThat(game.getUnitAt(new Position(8, 11)), is(nullValue()));
+    }
 
+    @Test
+    public void redCanProduceArcher() {
+        assertThat(game.getCityAt(new Position(1, 1)).getOwner(), is(Player.RED));
+        game.getCityAt(new Position(1, 1)).setProduction(GameConstants.ARCHER);
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(0, 1)).getTypeString(), is(GameConstants.ARCHER));
+    }
 
+    @Test
+    public void redCanProduceLegion() {
+        assertThat(game.getCityAt(new Position(1, 1)).getOwner(), is(Player.RED));
+        game.getCityAt(new Position(1, 1)).setProduction(GameConstants.LEGION);
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(0, 1)).getTypeString(), is(GameConstants.LEGION));
+    }
 
-  // @Test
-    public void whenACityHasAccumulatedEnoughProductionItProducesTheUnitSetForProduction () {
-        assertThat(game.getCityAt(new Position(4,1)), is(notNullValue())); // there is a city at 4,3
-        game.getCityAt(new Position(4,1)).setProduction(GameConstants.ARCHER);
-        for(int i = 0; i < 4; i ++){ //calculating two round
+    @Test
+    public void redCanProduceSettler() {
+        assertThat(game.getCityAt(new Position(1, 1)).getOwner(), is(Player.RED));
+        game.getCityAt(new Position(1, 1)).setProduction(GameConstants.SETTLER);
+        for (int i = 0; i < 10; i++) {
             game.endOfTurn();
         }
-        //assertThat(game.getCityAt());
-   }
+        assertThat(game.getUnitAt(new Position(0, 1)).getTypeString(), is(GameConstants.SETTLER));
+    }
+    @Test
+    public void blueCanProduceArcher () {
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+        game.getCityAt(new Position(4,1)).setProduction(GameConstants.ARCHER);
+        for(int i = 0; i < 4; i ++){
+            game.endOfTurn();
+        }
+        assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.ARCHER));
 
+    }
 
+    @Test
+    public void blueCanProduceLegion () {
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+        game.getCityAt(new Position(4,1)).setProduction(GameConstants.LEGION);
+        for(int i = 0; i < 6; i ++){
+            game.endOfTurn();
+        }
+        assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.LEGION));
+    }
 
+    @Test
+    public void blueCanProduceSettler () {
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+        game.getCityAt(new Position(4,1)).setProduction(GameConstants.SETTLER);
+        for(int i = 0; i < 10; i ++){
+            game.endOfTurn();
+        }
+        assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.SETTLER));
+    }
+    @Test
+    public void citiesStayAtPopulation1(){
+        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
+        game.getCityAt(new Position(1,1)).getWorkforceFocus();
+        for(int i = 1; i < 4; i++){
+            game.endOfTurn();
+        }
+        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
+    }
 }

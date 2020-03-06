@@ -31,19 +31,19 @@ Test list for HotCiv Alpha
 
 [OK] Set production focus for a city
 [OK] Cities accumulate production over more rounds
-[-] A city places the unit set for production in the city if no other unit present
+[OK] A city places the unit set for production in the city if no other unit present
 [OK] Unit cost of an archer is 10
-[] When a city has accumulated enough it produces the unit selected for production
-[] The units cost is the deducted from the cities treasury
-[] The unit is placed in the city, if no other city is present
-[] Otherwise, the unit is placed on the first non-occupied adjacent tile - starting from the above tile, moving clockwise
+[OK] When a city has accumulated enough it produces the unit selected for production
+[OK] The units cost is the deducted from the cities treasury
+[OK] Otherwise, the unit is placed on the first non-occupied adjacent tile - starting from the above tile, moving clockwise
+[OK] When a city produces a unit outside the city itself, it only produces one unit
 
-[] Red player can produce unit type archer
-[] Red player can produce unit type legion
-[] Red player can produce unit type settler
-[] Blue player can produce unit type archer
-[] Blue player can produce unit type legion
-[] Blue player can produce unit type settler
+[OK] Red player can produce unit type archer
+[OK] Red player can produce unit type legion
+[OK] Red player can produce unit type settler
+[OK] Blue player can produce unit type archer
+[OK] Blue player can produce unit type legion
+[OK] Blue player can produce unit type settler
 
 [OK] world consists of 16x16 tiles, starting at index 0
 [OK] Tile of type Plain, should be of type Plain
@@ -51,8 +51,8 @@ Test list for HotCiv Alpha
 [OK] Tile (1,0) is of type Ocean
 [OK] Tile (0,1) is of type Hills
 [OK] Tile (2,2) is of type Mountains
-[] Cities stay at population 1
-[] Cities produce 6 production per round
+[Ok] Cities stay at population 1
+
 
 []
 

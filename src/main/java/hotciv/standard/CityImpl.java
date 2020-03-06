@@ -50,4 +50,8 @@ public class CityImpl implements City {
         this.production = t;
     }
 
+
+    public void deductTreasury(int i) {
+        this.treasury = i;
+    }
 }

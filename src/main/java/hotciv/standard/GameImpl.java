@@ -142,23 +142,22 @@ public class GameImpl implements Game {
             CityImpl c = getCityAt(p);
 
             c.setTreasury(6);
-          if (c.getTreasury() >= GameConstants.getUnitCost(c.getProduction()) && !c.getProduction().equals("No unit type")) {               //hvis nok penger
+            if (c.getTreasury() >= GameConstants.getUnitCost(c.getProduction()) && !c.getProduction().equals("No unit type")) {               //hvis nok penger
                 c.deductTreasury(c.getTreasury() - GameConstants.getUnitCost(c.getProduction()));  //trekk prisen fra
                 if (!units.containsKey(p)) {                                                    //hvis ingen unit
-                   createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));                //lag en by
-                }
-                else {
+                    createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));                //lag en by
+                } else {
                     int counter = 0;
                     for (Position u : Utility.get8neighborhoodOf(p)) {
                         if (!units.containsKey(u) && counter == 0) {
-                             createUnit(u, new UnitImpl(c.getOwner(), c.getProduction()));      //lag units på alle de flisene
-                            counter ++;
+                            createUnit(u, new UnitImpl(c.getOwner(), c.getProduction()));      //lag units på alle de flisene
+                            counter++;
                         }
                     }
                 }
 
             }
-       }
+        }
     }
 
 

@@ -41,16 +41,22 @@ public class GameImpl implements Game {
     private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
     private int gameAge;
     private Player playerInTurn;
+    private WinnerStrategy winnerStrategy;
 
 
-    public GameImpl() {
+    public GameImpl(WinnerStrategy winnerStrategy) {
+        this.winnerStrategy = winnerStrategy;
+        
+        setUp();
+        }
+    public void setUp (){
         playerInTurn = Player.RED;
         gameAge = -4000;
         for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
             for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
                 createTile(new Position(i, j), new TileImpl(GameConstants.PLAINS));
             }
-        }
+    }
 
         createTile(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
         createTile(new Position(0, 1), new TileImpl(GameConstants.HILLS));
@@ -85,10 +91,7 @@ public class GameImpl implements Game {
     }
 
     public Player getWinner() {
-        if (gameAge == -3000) {
-            return Player.RED;
-        }
-        return null;
+      return winnerStrategy.getWinner(gameAge);
     }
 
     public int getAge() {

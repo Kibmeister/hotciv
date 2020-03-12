@@ -42,11 +42,13 @@ public class GameImpl implements Game {
     private int gameAge;
     private Player playerInTurn;
     private WinnerStrategy winnerStrategy;
+    private AgingStrategy agingStrategy;
 
 
-    public GameImpl(WinnerStrategy winnerStrategy) {
+    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy) {
         this.winnerStrategy = winnerStrategy;
-        
+        this.agingStrategy = agingStrategy;
+
         setUp();
         }
     public void setUp (){
@@ -91,7 +93,7 @@ public class GameImpl implements Game {
     }
 
     public Player getWinner() {
-      return winnerStrategy.getWinner(gameAge);
+      return winnerStrategy.getWinner(this);
     }
 
     public int getAge() {
@@ -107,8 +109,12 @@ public class GameImpl implements Game {
 
             createUnit(to, units.get(from));                                // create the new unit
 
-            units.get(to).setMoveCount(units.get(to).getMoveCount() - 1);                                  // deduct the moveCount
+            units.get(to).setMoveCount(units.get(to).getMoveCount() - 1);      // deduct the moveCount
             units.remove(from);                                               // removes the unit at from position as it moves
+            if(cities.containsKey(to)){
+                cities.get(to).setOwner(units.get(to).getOwner());                  //the unit occupying the city becomes its owner
+            }
+
 
             endOfTurn();
             return true;
@@ -136,7 +142,7 @@ public class GameImpl implements Game {
             }
             produceUnits();
         }
-        gameAge += 100;
+        gameAge += agingStrategy.worldAges();
     }
 
     public void produceUnits() {
@@ -171,6 +177,9 @@ public class GameImpl implements Game {
     }
 
     public void performUnitActionAt(Position p) {
+    }
+    public HashMap<Position, CityImpl>  getCities(){
+        return cities;
     }
 
     public void createTile(Position p, TileImpl t) {

@@ -145,4 +145,6 @@ public interface Game {
   public void createUnit(Position p, UnitImpl u);
 
   public void createCity(Position p, CityImpl c);
+
+
 }

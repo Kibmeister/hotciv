@@ -45,7 +45,7 @@ public class TestAlphaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new AlphaWinnerStrategy());
+        game = new GameImpl(new AlphaWinnerStrategy(), new AlphaAgingStrategy());
     }
 
 

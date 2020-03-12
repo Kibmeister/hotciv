@@ -1,5 +1,7 @@
 package hotciv.framework;
 
+import hotciv.standard.GameImpl;
+
 public interface WinnerStrategy {
-    public Player getWinner(int gameAge);
+    public Player getWinner(GameImpl game);
 }

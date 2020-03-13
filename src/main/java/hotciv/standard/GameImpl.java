@@ -114,8 +114,6 @@ public class GameImpl implements Game {
             if(cities.containsKey(to)){
                 cities.get(to).setOwner(units.get(to).getOwner());                  //the unit occupying the city becomes its owner
             }
-
-
             endOfTurn();
             return true;
         } else {

@@ -258,14 +258,13 @@ public class TestBetaCiv {
 
     @Test
     public void theWinnerIsTheFirstPlayerToConcurAllTheCitiesInTheWorld (){
-        assertThat(game.getWinner(), is(Player.RED));
         assertThat(game.getCityAt(new Position(1,1)).getOwner(), is(Player.RED));
         assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
+        game.endOfTurn();
         game.createUnit(new Position(1,2), new UnitImpl(Player.BLUE, GameConstants.ARCHER));
         game.moveUnit(new Position(1,2), new Position(1,1));
         assertThat(game.getUnitAt(new Position(1,1)).getOwner() , is(Player.BLUE));
-
-
+        assertThat(game.getWinner(), is(Player.BLUE));
     }
 
 

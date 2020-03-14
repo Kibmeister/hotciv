@@ -113,7 +113,7 @@ public class TestAlphaCiv {
 
     @Test
     public void gameAdvances100YearsPerRound() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             game.endOfTurn();
         }
         assertThat(game.getAge(), is(-2000));
@@ -160,7 +160,7 @@ public class TestAlphaCiv {
 
     @Test
     public void redWinsIn3000BC() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             game.endOfTurn();
         }
         assertThat(game.getAge(), is(-3000));

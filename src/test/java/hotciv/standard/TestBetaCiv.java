@@ -18,6 +18,12 @@ public class TestBetaCiv {
     public void setUp (){
         this.game = new GameImpl(new BetaWinnerStrategy(), new BetaAgingStrategy ());
     }
+    public void roundCounter (int i) {
+        for(int j = 0; j < i; j ++){
+            game.endOfTurn();
+            game.endOfTurn();
+        }
+    }
 
     @Test
     public void shouldBeRedAsStartingPlayer() {
@@ -266,10 +272,86 @@ public class TestBetaCiv {
         assertThat(game.getUnitAt(new Position(1,1)).getOwner() , is(Player.BLUE));
         assertThat(game.getWinner(), is(Player.BLUE));
     }
+    @Test
+    public void theGameProgressesWith100YearsPerRoundBetween4000BCto1000BC() {
+        assertThat(game.getAge(), is (-4000));
+        roundCounter(30);
+
+        assertThat(game.getAge(), is(-1000));
+    }
+    @Test
+    public void afterRound39theYearIs100BC(){
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(39);
+        assertThat(game.getAge(), is(-100));
+    }
+    @Test
+    public void afterRound40theYearIs1BC () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(40);
+        assertThat(game.getAge(), is(-1));
+    }
+    @Test
+    public void afterRound41theYearIs1AD () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(41);
+        assertThat(game.getAge(), is(1));
+    }
+    @Test
+    public void afterRound42theYearIs50AD (){
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(42);
+        assertThat(game.getAge(), is(50));
+    }
+    @Test
+    public void afterRound43theYearIs100AD (){
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(43);
+        assertThat(game.getAge(), is(100));
+    }
 
 
+    @Test
+    public void afterRound76theYearIs1750AD () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(76);
+        assertThat(game.getAge(), is(1750));
+    }
 
-
-
-
+    @Test
+    public void afterRound77theYearIs1775() {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(77);
+        assertThat(game.getAge(), is(1775));
+    }
+    @Test
+    public void afterRound82theYearIs1900AD () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(82);
+        assertThat(game.getAge(), is(1900));
+    }
+    @Test
+    public void afterRound83theYearIs1905AD () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(83);
+        assertThat(game.getAge(), is(1905));
+    }
+    @Test
+    public void afterRound96theYearIs1970AD () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(96);
+        assertThat(game.getAge(), is(1970));
+    }
+    @Test
+    public void afterRound97thYearIs1971AD () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(97);
+        assertThat(game.getAge(), is(1971));
+    }
+    @Test
+    public void afterRound98theYearIs1972 () {
+        assertThat(game.getAge(), is(-4000));
+        roundCounter(98);
+        assertThat(game.getAge(), is(1972));
+    }
 }

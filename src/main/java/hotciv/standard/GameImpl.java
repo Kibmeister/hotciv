@@ -139,8 +139,9 @@ public class GameImpl implements Game {
                 u.setMoveCount(1);
             }
             produceUnits();
+            gameAge += agingStrategy.worldAges();
         }
-        gameAge += agingStrategy.worldAges();
+
     }
 
     public void produceUnits() {

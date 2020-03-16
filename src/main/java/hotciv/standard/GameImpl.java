@@ -43,38 +43,25 @@ public class GameImpl implements Game {
     private Player playerInTurn;
     private WinnerStrategy winnerStrategy;
     private AgingStrategy agingStrategy;
+    private UnitStrategy unitStrategy;
+    private WorldLayoutStrategy worldLayoutStrategy;
 
 
-    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy) {
+    public GameImpl(WinnerStrategy winnerStrategy,
+                    AgingStrategy agingStrategy,
+                    UnitStrategy unitStrategy,
+                    WorldLayoutStrategy worldLayoutStrategy) {
         this.winnerStrategy = winnerStrategy;
         this.agingStrategy = agingStrategy;
-
-        setUp();
+        this.unitStrategy = unitStrategy;
+        this.worldLayoutStrategy = worldLayoutStrategy;
+        main();
         }
-    public void setUp (){
+    public void main (){
         playerInTurn = Player.RED;
         gameAge = -4000;
-        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                createTile(new Position(i, j), new TileImpl(GameConstants.PLAINS));
-            }
+        setGameLayoutStrategy();
     }
-
-        createTile(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
-        createTile(new Position(0, 1), new TileImpl(GameConstants.HILLS));
-        createTile(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
-
-        createCity(new Position(1, 1), new CityImpl(Player.RED));
-        createCity(new Position(4, 1), new CityImpl(Player.BLUE));
-
-
-        createUnit(new Position(3, 2), new UnitImpl(Player.BLUE, GameConstants.LEGION));
-        createUnit(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER));
-        createUnit(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER));
-        createUnit(new Position(1, 1), new UnitImpl(Player.RED, GameConstants.SETTLER));
-
-    }
-
 
     public TileImpl getTileAt(Position p) {
         return world.get(p);
@@ -105,7 +92,8 @@ public class GameImpl implements Game {
                 && units.get(from).getOwner() == getPlayerInTurn()          // acting player is player in turn
                 && world.containsKey(to)                                    // to position is within the scope of the world
                 && tileAdjacent(from, to)                                   // checks if to tile is within the "1" distance range
-                && !world.get(to).getTypeString().equals(GameConstants.OCEANS)) {
+                && !world.get(to).getTypeString().equals(GameConstants.OCEANS)
+                && getUnitAt(from).getUnitAction()) {
 
             createUnit(to, units.get(from));                                // create the new unit
 
@@ -176,10 +164,19 @@ public class GameImpl implements Game {
     }
 
     public void performUnitActionAt(Position p) {
+        if(units.containsKey(p)){
+            unitStrategy.unitAction(p, this);
+        }
     }
     public HashMap<Position, CityImpl>  getCities(){
         return cities;
     }
+    private void setGameLayoutStrategy() {
+        world = worldLayoutStrategy.getWorldLayout();
+        units = worldLayoutStrategy.getUnitsLayout();
+        cities = worldLayoutStrategy.getCitiesLayout();
+    }
+
 
     public void createTile(Position p, TileImpl t) {
         world.put(p, t);
@@ -193,4 +190,7 @@ public class GameImpl implements Game {
         cities.put(p, c);
     }
 
+    public void removeUnit(Position p) {
+        units.remove(p);
+    }
 }

@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
@@ -7,12 +8,21 @@ public class UnitImpl implements Unit {
 
     private Player unitOwner;
     private String unitType;
-    private int moveCount;
+    private boolean unitAction;
+    private int moveCount, defensiveStrength, attackingStrength;
 
     public UnitImpl (Player unitOwner, String unitType){
         this.unitOwner = unitOwner;
         this.unitType = unitType;
         moveCount = 1;
+        unitAction = true;
+        if(unitType.equals(GameConstants.ARCHER)){
+            defensiveStrength = 3;
+        } else if (unitType.equals(GameConstants.LEGION)){
+            defensiveStrength = 2;
+        } else if(unitType.equals(GameConstants.SETTLER)){
+            defensiveStrength = 3;
+        }
     }
 
     @Override
@@ -32,16 +42,27 @@ public class UnitImpl implements Unit {
 
     @Override
     public int getDefensiveStrength() {
-        return 0;
+        return defensiveStrength;
     }
 
     @Override
     public int getAttackingStrength() {
-        return 0;
+        return attackingStrength;
     }
 
     @Override
     public void setMoveCount(int i) {
         moveCount = i;
+    }
+    public void setDefensiveStrength(int i) {
+        defensiveStrength = i;
+    }
+
+    public void setUnitAction(boolean b) {
+        unitAction = b;
+    }
+
+    public boolean getUnitAction() {
+        return unitAction;
     }
 }

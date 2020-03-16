@@ -65,6 +65,7 @@ public interface Unit {
   public int getAttackingStrength();
   /** set movesCount to the parameter passed */
   public void setMoveCount (int i);
-
+  /** retrieve the true/false of the units action */
+  public boolean getUnitAction ();
 
 }

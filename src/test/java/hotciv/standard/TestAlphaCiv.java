@@ -45,14 +45,14 @@ public class TestAlphaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new AlphaWinnerStrategy(), new AlphaAgingStrategy());
+        game = new GameImpl(new AlphaWinnerStrategy(),
+                new AlphaAgingStrategy(),
+                new AlphaUnitStrategy(),
+                new AlphaWorldLayoutStrategy());
     }
-
-
     @Test
     public void shouldBeRedAsStartingPlayer() {
         assertThat(game, is(notNullValue()));
-
         assertThat(game.getPlayerInTurn(), is(Player.RED));
     }
 
@@ -72,52 +72,52 @@ public class TestAlphaCiv {
         assertThat(t.getTypeString(), is(GameConstants.PLAINS));
     }
 
-    @Test
-    public void mapShouldBeenCreated() {
-        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                assertNotNull(game.getTileAt(new Position(i, j)));
+        @Test
+        public void mapShouldBeenCreated() {
+            for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+                for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                    assertNotNull(game.getTileAt(new Position(i, j)));
+                }
             }
+            assertNull(game.getTileAt(new Position(16, 16)));
         }
-        assertNull(game.getTileAt(new Position(16, 16)));
-    }
 
-    @Test
-    public void hillAtTile0dot1() {
-        assertThat(game.getTileAt(new Position(0, 1)).getTypeString(), is(GameConstants.HILLS));
-    }
-
-    @Test
-    public void mountainAt2dot2() {
-        assertThat(game.getTileAt(new Position(2, 2)).getTypeString(), is(GameConstants.MOUNTAINS));
-    }
-
-    @Test
-    public void tilesAreInGeneralOfTypePlain() {
-        assertThat(game.getTileAt(new Position(1, 5)).getTypeString(), is(GameConstants.PLAINS));
-        assertThat(game.getTileAt(new Position(2, 5)).getTypeString(), is(GameConstants.PLAINS));
-        assertThat(game.getTileAt(new Position(3, 5)).getTypeString(), is(GameConstants.PLAINS));
-        assertThat(game.getTileAt(new Position(4, 5)).getTypeString(), is(GameConstants.PLAINS));
-        assertThat(game.getTileAt(new Position(5, 5)).getTypeString(), is(GameConstants.PLAINS));
-    }
-
-    @Test
-    public void blueHasACityAt4dot1() {
-        assertThat(game.getCityAt(new Position(4, 1)).getOwner(), is(Player.BLUE));
-    }
-
-    @Test
-    public void gameStartsInYear4000BC() {
-        assertThat(game.getAge(), is(-4000));
-    }
-
-    @Test
-    public void gameAdvances100YearsPerRound() {
-        for (int i = 0; i < 40; i++) {
-            game.endOfTurn();
+        @Test
+        public void hillAtTile0dot1() {
+            assertThat(game.getTileAt(new Position(0, 1)).getTypeString(), is(GameConstants.HILLS));
         }
-        assertThat(game.getAge(), is(-2000));
-    }
+
+        @Test
+        public void mountainAt2dot2() {
+            assertThat(game.getTileAt(new Position(2, 2)).getTypeString(), is(GameConstants.MOUNTAINS));
+        }
+
+        @Test
+        public void tilesAreInGeneralOfTypePlain() {
+            assertThat(game.getTileAt(new Position(1, 5)).getTypeString(), is(GameConstants.PLAINS));
+            assertThat(game.getTileAt(new Position(2, 5)).getTypeString(), is(GameConstants.PLAINS));
+            assertThat(game.getTileAt(new Position(3, 5)).getTypeString(), is(GameConstants.PLAINS));
+            assertThat(game.getTileAt(new Position(4, 5)).getTypeString(), is(GameConstants.PLAINS));
+            assertThat(game.getTileAt(new Position(5, 5)).getTypeString(), is(GameConstants.PLAINS));
+        }
+
+        @Test
+        public void blueHasACityAt4dot1() {
+            assertThat(game.getCityAt(new Position(4, 1)).getOwner(), is(Player.BLUE));
+        }
+
+        @Test
+        public void gameStartsInYear4000BC() {
+            assertThat(game.getAge(), is(-4000));
+        }
+
+        @Test
+        public void gameAdvances100YearsPerRound() {
+            for (int i = 0; i < 40; i++) {
+                game.endOfTurn();
+            }
+            assertThat(game.getAge(), is(-2000));
+        }
 
     @Test
     public void redHasAnArcherAt2dot0() {

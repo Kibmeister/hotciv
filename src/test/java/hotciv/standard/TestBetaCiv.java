@@ -16,7 +16,10 @@ public class TestBetaCiv {
 
     @Before
     public void setUp (){
-        this.game = new GameImpl(new BetaWinnerStrategy(), new BetaAgingStrategy ());
+        this.game = new GameImpl(new BetaWinnerStrategy(),
+                new BetaAgingStrategy (),
+                new AlphaUnitStrategy(),
+                new AlphaWorldLayoutStrategy());
     }
     public void roundCounter (int i) {
         for(int j = 0; j < i; j ++){
@@ -115,7 +118,6 @@ public class TestBetaCiv {
         game.moveUnit(new Position(4, 3), new Position(5, 4));
         assertThat(game.getUnitAt(new Position(5, 4)), is(notNullValue()));
         assertThat(game.getUnitAt(new Position(5, 4)).getMoveCount(), is(0));
-
     }
 
     @Test

@@ -167,10 +167,14 @@ public class TestBetaCiv {
     @Test
     public void citiesAccumulateProductionOverMoreRounds() {
         assertThat(game.getCityAt(new Position(4, 1)), is(notNullValue())); // there is a city at 4,3
+        assertThat(game.getCityAt(new Position(4,1)).getTreasury(), is(0));
+        assertThat(game.getUnitAt(new Position(4,1)), is(nullValue()));
         game.getCityAt(new Position(4, 1)).setProduction("No unit type");
         game.endOfTurn();
         game.endOfTurn();
-        assertThat(game.getCityAt(new Position(4, 1)).getTreasury(), is(6));
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(game.getCityAt(new Position(4, 1)).getTreasury(), is(12));
 
     }
 

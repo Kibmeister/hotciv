@@ -56,8 +56,9 @@ public class GameImpl implements Game {
         this.unitStrategy = unitStrategy;
         this.worldLayoutStrategy = worldLayoutStrategy;
         main();
-        }
-    public void main (){
+    }
+
+    public void main() {
         playerInTurn = Player.RED;
         gameAge = -4000;
         setGameLayoutStrategy();
@@ -80,7 +81,7 @@ public class GameImpl implements Game {
     }
 
     public Player getWinner() {
-      return winnerStrategy.getWinner(this);
+        return winnerStrategy.getWinner(this);
     }
 
     public int getAge() {
@@ -99,7 +100,7 @@ public class GameImpl implements Game {
 
             units.get(to).setMoveCount(units.get(to).getMoveCount() - 1);      // deduct the moveCount
             units.remove(from);                                               // removes the unit at from position as it moves
-            if(cities.containsKey(to)){
+            if (cities.containsKey(to)) {
                 cities.get(to).setOwner(units.get(to).getOwner());                  //the unit occupying the city becomes its owner
             }
             endOfTurn();
@@ -136,24 +137,46 @@ public class GameImpl implements Game {
 
         for (Position p : cities.keySet()) {
             CityImpl c = getCityAt(p);
-
             c.setTreasury(6);
-            if (c.getTreasury() >= GameConstants.getUnitCost(c.getProduction()) && !c.getProduction().equals("No unit type")) {               //hvis nok penger
-                c.deductTreasury(c.getTreasury() - GameConstants.getUnitCost(c.getProduction()));  //trekk prisen fra
-                if (!units.containsKey(p)) {                                                    //hvis ingen unit
-                    createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));                //lag en by
-                } else {
-                    int counter = 0;
-                    for (Position u : Utility.get8neighborhoodOf(p)) {
-                        if (!units.containsKey(u) && counter == 0) {
-                            createUnit(u, new UnitImpl(c.getOwner(), c.getProduction()));      //lag units på alle de flisene
-                            counter++;
-                        }
-                    }
-                }
+            boolean enoughTreasury = c.getTreasury() >= GameConstants.getUnitCost(c.getProduction());
+            boolean unitAtPosition = units.containsKey(p);
 
+            if (enoughTreasury) {
+                updateTreasury(c);
+                if (!unitAtPosition) {
+                    placeUnits(p, c);
+                } else {
+                    placeUnitsOutsideCity(p, c);
+                }
             }
         }
+    }
+
+    public void placeUnitsOutsideCity(Position p, CityImpl c) {
+        int tilesRotated = 0;
+        for (Position u : Utility.get8neighborhoodOf(p)) {
+            if (!unitAtThisPosition(u) && tilesRotated == 0) {
+
+                createUnit(u, new UnitImpl(c.getOwner(), c.getProduction()));
+                tilesRotated++;
+            }
+        }
+
+    }
+
+    public void placeUnits(Position p, CityImpl c) {
+        createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));
+    }
+
+    public void updateTreasury(CityImpl c) {
+        c.deductTreasury(c.getTreasury() - GameConstants.getUnitCost(c.getProduction()));
+    }
+
+    private boolean unitAtThisPosition(Position p) {
+        if (units.containsKey(p)) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -164,13 +187,15 @@ public class GameImpl implements Game {
     }
 
     public void performUnitActionAt(Position p) {
-        if(units.containsKey(p)){
+        if (units.containsKey(p)) {
             unitStrategy.unitAction(p, this);
         }
     }
-    public HashMap<Position, CityImpl>  getCities(){
+
+    public HashMap<Position, CityImpl> getCities() {
         return cities;
     }
+
     private void setGameLayoutStrategy() {
         world = worldLayoutStrategy.getWorldLayout();
         units = worldLayoutStrategy.getUnitsLayout();

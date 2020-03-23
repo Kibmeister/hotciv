@@ -165,7 +165,20 @@ public class GameImpl implements Game {
     }
 
     public void placeUnits(Position p, CityImpl c) {
-        createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));
+        if(validProduction(c)){
+            createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));
+        }
+
+    }
+
+    private boolean validProduction(CityImpl c) {
+        if(c.getProduction().equals(GameConstants.ARCHER) ||
+                c.getProduction().equals(GameConstants.SETTLER) ||
+                c.getProduction().equals(GameConstants.LEGION)){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     public void updateTreasury(CityImpl c) {

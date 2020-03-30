@@ -89,25 +89,60 @@ public class GameImpl implements Game {
     }
 
     public boolean moveUnit(Position from, Position to) {
-        if (!world.get(to).getTypeString().equals(GameConstants.MOUNTAINS) // there is no mountain at to tile
-                && units.get(from).getOwner() == getPlayerInTurn()          // acting player is player in turn
-                && world.containsKey(to)                                    // to position is within the scope of the world
-                && tileAdjacent(from, to)                                   // checks if to tile is within the "1" distance range
-                && !world.get(to).getTypeString().equals(GameConstants.OCEANS)
-                && getUnitAt(from).getUnitAction()) {
 
-            createUnit(to, units.get(from));                                // create the new unit
+        if (!validMove(from, to)) { return false ; }
 
-            units.get(to).setMoveCount(units.get(to).getMoveCount() - 1);      // deduct the moveCount
-            units.remove(from);                                               // removes the unit at from position as it moves
-            if (cities.containsKey(to)) {
-                cities.get(to).setOwner(units.get(to).getOwner());                  //the unit occupying the city becomes its owner
-            }
+            createUnit(to, units.get(from));
+
+            deductMoveCount(to);
+            removeUnit(from);
+            setUnitOwner(to);
             endOfTurn();
+
             return true;
-        } else {
+    }
+
+    private void setUnitOwner(Position to) {
+        if (cities.containsKey(to)) {
+            cities.get(to).setOwner(units.get(to).getOwner());                  //the unit occupying the city becomes its owner
+        }
+    }
+
+    public void deductMoveCount(Position to) {
+        units.get(to).setMoveCount(units.get(to).getMoveCount() - 1);
+    }
+
+    public boolean validMove(Position from, Position to) {
+
+        boolean typeMountain = world.get(to).getTypeString().equals(GameConstants.MOUNTAINS);
+        boolean typeOcean = world.get(to).getTypeString().equals(GameConstants.OCEANS);
+        if (typeMountain || typeOcean) {
             return false;
         }
+        boolean playerInTurnUnit = units.get(from).getOwner() == getPlayerInTurn();
+        if (!playerInTurnUnit) {
+            return false;
+        }boolean unitHasMoved = units.get(from).getMoveCount() < 1;
+        if(unitHasMoved){
+            return false;
+        }
+
+        boolean validToPosition = world.containsKey(to);
+        if (!validToPosition) {
+            return false;
+        }
+
+        boolean validDistance = tileAdjacent(from, to);
+        if (!validDistance) {
+            return false;
+        }
+
+        boolean unitAction = units.get(from).getUnitAction();
+        if (!unitAction) {
+            return false;
+        }
+
+        return true;
     }
 
     public boolean tileAdjacent(Position from, Position to) {
@@ -165,18 +200,18 @@ public class GameImpl implements Game {
     }
 
     public void placeUnits(Position p, CityImpl c) {
-        if(validProduction(c)){
+        if (validProduction(c)) {
             createUnit(p, new UnitImpl(c.getOwner(), c.getProduction()));
         }
 
     }
 
     private boolean validProduction(CityImpl c) {
-        if(c.getProduction().equals(GameConstants.ARCHER) ||
+        if (c.getProduction().equals(GameConstants.ARCHER) ||
                 c.getProduction().equals(GameConstants.SETTLER) ||
-                c.getProduction().equals(GameConstants.LEGION)){
+                c.getProduction().equals(GameConstants.LEGION)) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }

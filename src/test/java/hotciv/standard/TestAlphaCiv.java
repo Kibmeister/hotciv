@@ -50,6 +50,7 @@ public class TestAlphaCiv {
                 new AlphaUnitStrategy(),
                 new AlphaWorldLayoutStrategy());
     }
+
     @Test
     public void shouldBeRedAsStartingPlayer() {
         assertThat(game, is(notNullValue()));
@@ -72,52 +73,52 @@ public class TestAlphaCiv {
         assertThat(t.getTypeString(), is(GameConstants.PLAINS));
     }
 
-        @Test
-        public void mapShouldBeenCreated() {
-            for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-                for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                    assertNotNull(game.getTileAt(new Position(i, j)));
-                }
+    @Test
+    public void mapShouldBeenCreated() {
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                assertNotNull(game.getTileAt(new Position(i, j)));
             }
-            assertNull(game.getTileAt(new Position(16, 16)));
         }
+        assertNull(game.getTileAt(new Position(16, 16)));
+    }
 
-        @Test
-        public void hillAtTile0dot1() {
-            assertThat(game.getTileAt(new Position(0, 1)).getTypeString(), is(GameConstants.HILLS));
-        }
+    @Test
+    public void hillAtTile0dot1() {
+        assertThat(game.getTileAt(new Position(0, 1)).getTypeString(), is(GameConstants.HILLS));
+    }
 
-        @Test
-        public void mountainAt2dot2() {
-            assertThat(game.getTileAt(new Position(2, 2)).getTypeString(), is(GameConstants.MOUNTAINS));
-        }
+    @Test
+    public void mountainAt2dot2() {
+        assertThat(game.getTileAt(new Position(2, 2)).getTypeString(), is(GameConstants.MOUNTAINS));
+    }
 
-        @Test
-        public void tilesAreInGeneralOfTypePlain() {
-            assertThat(game.getTileAt(new Position(1, 5)).getTypeString(), is(GameConstants.PLAINS));
-            assertThat(game.getTileAt(new Position(2, 5)).getTypeString(), is(GameConstants.PLAINS));
-            assertThat(game.getTileAt(new Position(3, 5)).getTypeString(), is(GameConstants.PLAINS));
-            assertThat(game.getTileAt(new Position(4, 5)).getTypeString(), is(GameConstants.PLAINS));
-            assertThat(game.getTileAt(new Position(5, 5)).getTypeString(), is(GameConstants.PLAINS));
-        }
+    @Test
+    public void tilesAreInGeneralOfTypePlain() {
+        assertThat(game.getTileAt(new Position(1, 5)).getTypeString(), is(GameConstants.PLAINS));
+        assertThat(game.getTileAt(new Position(2, 5)).getTypeString(), is(GameConstants.PLAINS));
+        assertThat(game.getTileAt(new Position(3, 5)).getTypeString(), is(GameConstants.PLAINS));
+        assertThat(game.getTileAt(new Position(4, 5)).getTypeString(), is(GameConstants.PLAINS));
+        assertThat(game.getTileAt(new Position(5, 5)).getTypeString(), is(GameConstants.PLAINS));
+    }
 
-        @Test
-        public void blueHasACityAt4dot1() {
-            assertThat(game.getCityAt(new Position(4, 1)).getOwner(), is(Player.BLUE));
-        }
+    @Test
+    public void blueHasACityAt4dot1() {
+        assertThat(game.getCityAt(new Position(4, 1)).getOwner(), is(Player.BLUE));
+    }
 
-        @Test
-        public void gameStartsInYear4000BC() {
-            assertThat(game.getAge(), is(-4000));
-        }
+    @Test
+    public void gameStartsInYear4000BC() {
+        assertThat(game.getAge(), is(-4000));
+    }
 
-        @Test
-        public void gameAdvances100YearsPerRound() {
-            for (int i = 0; i < 40; i++) {
-                game.endOfTurn();
-            }
-            assertThat(game.getAge(), is(-2000));
+    @Test
+    public void gameAdvances100YearsPerRound() {
+        for (int i = 0; i < 40; i++) {
+            game.endOfTurn();
         }
+        assertThat(game.getAge(), is(-2000));
+    }
 
     @Test
     public void redHasAnArcherAt2dot0() {
@@ -179,7 +180,7 @@ public class TestAlphaCiv {
         game.endOfTurn();
         assertThat(game.getUnitAt(new Position(3, 2)).getOwner(), is(Player.BLUE));
         assertThat(game.getUnitAt(new Position(4, 3)).getOwner(), is(Player.RED));
-        assertTrue(game.moveUnit(new Position(3, 2), new Position(4, 3)));
+        game.moveUnit(new Position(3, 2), new Position(4, 3));
         assertThat(game.getUnitAt(new Position(4, 3)).getOwner(), is(Player.BLUE));
     }
 
@@ -234,6 +235,7 @@ public class TestAlphaCiv {
     @Test
     public void unistAreInitializedToMaximalMoveCountAtStartOfEachRound() {
         assertThat(game.getUnitAt(new Position(4, 3)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(4, 3)).getMoveCount(), is(1));
         game.moveUnit(new Position(4, 3), new Position(5, 4));
         assertThat(game.getUnitAt(new Position(5, 4)).getMoveCount(), is(0));
         game.endOfTurn();
@@ -387,43 +389,46 @@ public class TestAlphaCiv {
         }
         assertThat(game.getUnitAt(new Position(0, 1)).getTypeString(), is(GameConstants.SETTLER));
     }
+
     @Test
-    public void blueCanProduceArcher () {
-        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
-        game.getCityAt(new Position(4,1)).setProduction(GameConstants.ARCHER);
-        for(int i = 0; i < 4; i ++){
+    public void blueCanProduceArcher() {
+        assertThat(game.getCityAt(new Position(4, 1)).getOwner(), is(Player.BLUE));
+        game.getCityAt(new Position(4, 1)).setProduction(GameConstants.ARCHER);
+        for (int i = 0; i < 4; i++) {
             game.endOfTurn();
         }
-        assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(new Position(4, 1)).getTypeString(), is(GameConstants.ARCHER));
 
     }
 
     @Test
-    public void blueCanProduceLegion () {
-        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
-        game.getCityAt(new Position(4,1)).setProduction(GameConstants.LEGION);
-        for(int i = 0; i < 6; i ++){
+    public void blueCanProduceLegion() {
+        assertThat(game.getCityAt(new Position(4, 1)).getOwner(), is(Player.BLUE));
+        game.getCityAt(new Position(4, 1)).setProduction(GameConstants.LEGION);
+        for (int i = 0; i < 6; i++) {
             game.endOfTurn();
         }
-        assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(new Position(4, 1)).getTypeString(), is(GameConstants.LEGION));
     }
 
     @Test
-    public void blueCanProduceSettler () {
-        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.BLUE));
-        game.getCityAt(new Position(4,1)).setProduction(GameConstants.SETTLER);
-        for(int i = 0; i < 10; i ++){
+    public void blueCanProduceSettler() {
+        assertThat(game.getCityAt(new Position(4, 1)).getOwner(), is(Player.BLUE));
+        game.getCityAt(new Position(4, 1)).setProduction(GameConstants.SETTLER);
+        for (int i = 0; i < 10; i++) {
             game.endOfTurn();
         }
-        assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(new Position(4, 1)).getTypeString(), is(GameConstants.SETTLER));
     }
+
     @Test
-    public void citiesStayAtPopulation1(){
-        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
-        game.getCityAt(new Position(1,1)).getWorkforceFocus();
-        for(int i = 1; i < 4; i++){
+    public void citiesStayAtPopulation1() {
+        assertThat(game.getCityAt(new Position(1, 1)).getSize(), is(1));
+        game.getCityAt(new Position(1, 1)).getWorkforceFocus();
+        for (int i = 1; i < 4; i++) {
             game.endOfTurn();
         }
-        assertThat(game.getCityAt(new Position(1,1)).getSize(), is(1));
+        assertThat(game.getCityAt(new Position(1, 1)).getSize(), is(1));
     }
+
 }

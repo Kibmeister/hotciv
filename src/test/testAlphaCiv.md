@@ -17,7 +17,7 @@ Test list for HotCiv Alpha
 [OK] Red's unit attack and destroy Blues unit
 [OK] A unit can only move 1 distance between two tiles
 [OK] Move unit actually moves a unit
-[OK]  A unit can only move if its move count is over 0
+[OK] A unit can only move if its movecount is over 0
 [OK] The move count of a unit is deducted after a move
 [OK] When the round starts, each unit is initialized to their maximal moves count
 

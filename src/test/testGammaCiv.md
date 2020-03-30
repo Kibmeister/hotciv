@@ -7,4 +7,5 @@ Test list for HotCiv Gamma
 [OK] the owner of the city is the same as the owner of the settler unit 
 [OK] archer at 2dot0 defensive strength is doubled if unit action initialized 
 [OK] archer at 2dot0 can not be moved after its unit action is performed 
-[] invoking unit action on a fortified archer, removes its fortification 
+[OK] invoking unit action on a fortified archer, removes its fortification 
+

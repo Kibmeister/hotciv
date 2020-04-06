@@ -16,7 +16,8 @@ public class TestDeltaCiv  {
         game = new GameImpl(new AlphaWinnerStrategy(),
                 new AlphaAgingStrategy(),
                 new AlphaUnitStrategy(),
-                new DeltaWorldLayoutStrategy());
+                new DeltaWorldLayoutStrategy(),
+                new AlphaAttackStrategy());
     }
     @Test
     public void shouldBeRedAsStartingPlayer() {
@@ -85,7 +86,9 @@ public class TestDeltaCiv  {
         GameImpl game = new GameImpl(new AlphaWinnerStrategy(),
                 new AlphaAgingStrategy(),
                 new AlphaUnitStrategy(),
-                new DeltaWorldLayoutStrategy(hills));
+                new DeltaWorldLayoutStrategy(hills),
+                new AlphaAttackStrategy());
+
         for(int i = 0 ; i < GameConstants.WORLDSIZE; i ++){
             for(int j = 0; j < GameConstants.WORLDSIZE; j++){
                 assertThat(game.getTileAt(new Position(i,j)).getTypeString(), is(GameConstants.HILLS));

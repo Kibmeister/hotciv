@@ -48,7 +48,8 @@ public class TestAlphaCiv {
         game = new GameImpl(new AlphaWinnerStrategy(),
                 new AlphaAgingStrategy(),
                 new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy());
+                new AlphaWorldLayoutStrategy(),
+                new AlphaAttackStrategy());
     }
 
     @Test

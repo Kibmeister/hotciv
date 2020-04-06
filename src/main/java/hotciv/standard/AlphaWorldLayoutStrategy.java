@@ -31,6 +31,7 @@ public class AlphaWorldLayoutStrategy implements WorldLayoutStrategy {
         world.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
         world.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
         world.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
+        world.put(new Position(10,10), new TileImpl(GameConstants.FOREST));
 
         return world;
     }
@@ -41,6 +42,8 @@ public class AlphaWorldLayoutStrategy implements WorldLayoutStrategy {
         units.put(new Position(4, 3), new UnitImpl(Player.RED, GameConstants.SETTLER));
         units.put(new Position(2, 0), new UnitImpl(Player.RED, GameConstants.ARCHER));
         units.put(new Position(1, 1), new UnitImpl(Player.RED, GameConstants.SETTLER));
+
+
         return units;
     }
 

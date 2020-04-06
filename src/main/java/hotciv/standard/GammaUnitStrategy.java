@@ -11,7 +11,7 @@ public class GammaUnitStrategy implements UnitStrategy {
             game.createCity(p, new CityImpl(u.getOwner()));
             game.removeUnit(p);
         }
-        if(u.getTypeString().equals(GameConstants.ARCHER)){
+        else if(u.getTypeString().equals(GameConstants.ARCHER)){
             if(u.getUnitAction()){
                 u.setDefensiveStrength(GameConstants.ARCHER_DEFENCE*2);
                 u.setUnitAction(false);

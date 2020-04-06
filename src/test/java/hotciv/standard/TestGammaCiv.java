@@ -16,7 +16,8 @@ public class TestGammaCiv {
         game = new GameImpl(new AlphaWinnerStrategy(),
                 new AlphaAgingStrategy(),
                 new GammaUnitStrategy(),
-                new AlphaWorldLayoutStrategy());
+                new AlphaWorldLayoutStrategy(),
+                new AlphaAttackStrategy());
     }
     @Test
     public void mapShouldBeenCreated() {

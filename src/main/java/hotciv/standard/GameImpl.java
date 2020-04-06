@@ -45,16 +45,19 @@ public class GameImpl implements Game {
     private AgingStrategy agingStrategy;
     private UnitStrategy unitStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
+    private AttackStrategy attackStrategy;
 
 
     public GameImpl(WinnerStrategy winnerStrategy,
                     AgingStrategy agingStrategy,
                     UnitStrategy unitStrategy,
-                    WorldLayoutStrategy worldLayoutStrategy) {
+                    WorldLayoutStrategy worldLayoutStrategy,
+                    AttackStrategy attackStrategy) {
         this.winnerStrategy = winnerStrategy;
         this.agingStrategy = agingStrategy;
         this.unitStrategy = unitStrategy;
         this.worldLayoutStrategy = worldLayoutStrategy;
+        this.attackStrategy = attackStrategy;
         main();
     }
 

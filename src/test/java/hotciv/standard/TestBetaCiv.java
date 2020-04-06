@@ -19,7 +19,8 @@ public class TestBetaCiv {
         this.game = new GameImpl(new BetaWinnerStrategy(),
                 new BetaAgingStrategy (),
                 new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy());
+                new AlphaWorldLayoutStrategy(),
+                new AlphaAttackStrategy());
     }
     public void roundCounter (int i) {
         for(int j = 0; j < i; j ++){

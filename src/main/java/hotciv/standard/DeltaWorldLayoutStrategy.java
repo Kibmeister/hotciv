@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.GameConstants;
+import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.WorldLayoutStrategy;
 
@@ -75,6 +76,8 @@ public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
 
     @Override
     public HashMap<Position, CityImpl> getCitiesLayout() {
+        cities.put(new Position(8,12), new CityImpl(Player.RED));
+        cities.put(new Position(4,5), new CityImpl(Player.BLUE));
         return cities;
     }
 }

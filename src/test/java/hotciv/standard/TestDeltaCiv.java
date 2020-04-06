@@ -96,5 +96,13 @@ public class TestDeltaCiv  {
     public void thereIsAForrestAt4dot4 () {
         assertThat(game.getTileAt(new Position(4,4 )).getTypeString(), is(GameConstants.FOREST));
     }
+    @Test
+    public void redHasACityAt8dot12 (){
+        assertThat(game.getCityAt(new Position(8,12)).getOwner(), is(Player.RED));
+    }
+    @Test
+    public void blueHasACityAt4dot5 () {
+        assertThat(game.getCityAt(new Position(4,5)).getOwner(), is(Player.BLUE));
+    }
 
 }

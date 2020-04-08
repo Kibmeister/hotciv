@@ -2,10 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import org.junit.*;
-import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 public class TestEpsilonCiv {
@@ -81,13 +78,13 @@ public class TestEpsilonCiv {
         assertThat(Utility2.getTerrainFactor(game, new Position(10,10)), is(2));
         // cities have multiplier 3
         assertThat(Utility2.getTerrainFactor(game, new Position(1,1)), is(3));
+
     }
 
     @Test public void shouldGiveSum0ForBlueAtP3_2() {
         assertThat("Blue unit at (3,2) should get +0 support",
                 Utility2.getFriendlySupport( game, new Position(3,2), Player.BLUE), is(+0));
     }
-
     @Test public void shouldGiveSum1ForBlueAtP2_4() {
         game.createUnit(new Position(3,5), new UnitImpl(Player.BLUE, GameConstants.LEGION));
         assertThat("Blue unit at (2,4) should get +1 support",
@@ -104,6 +101,48 @@ public class TestEpsilonCiv {
         assertThat("Red unit at (1,1) should get +2 support",
                 Utility2.getFriendlySupport( game, new Position(1,1), Player.RED), is(+2));
     }
+    @Test
+    public void theStrongestPlayerWinsTheBattle(){
+        GameImpl game = new GameImpl(
+                new EpsilonWinnerStrategy(),
+                new AlphaAgingStrategy(),
+                new AlphaUnitStrategy(),
+                new AlphaWorldLayoutStrategy(),
+                new EpsilonAttackStrategy (new FixedBattleProbability(5,1)));
+        game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.LEGION)); // 4+ attack strength
+        game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(0)); // +0 attack strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (12,12), game.getUnitAt(new Position (12,12)).getOwner()), is(0)); // +0 defensive strength
+        assertThat(Utility2.getTerrainFactor(game, new Position(11,11)), is(1));
+        assertThat(Utility2.getTerrainFactor(game, new Position(12,12)), is(1));
+        game.moveUnit(new Position(11,11), new Position(12,12));
+        assertThat(game.getUnitAt(new Position(12,12)).getOwner(), is(Player.RED));
+    }
+    @Test
+    public void thereIsADefeatIfTheDefendingPlayerIsStrongest () {
+        GameImpl game = new GameImpl(
+                new EpsilonWinnerStrategy(),
+                new AlphaAgingStrategy(),
+                new AlphaUnitStrategy(),
+                new AlphaWorldLayoutStrategy(),
+                new EpsilonAttackStrategy (new FixedBattleProbability(1,10)));
+        game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.LEGION)); // 4+ attack strength
+        game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(0)); // +0 attack strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (12,12), game.getUnitAt(new Position (12,12)).getOwner()), is(0)); // +0 defensive strength
+        assertThat(Utility2.getTerrainFactor(game, new Position(11,11)), is(1));
+        assertThat(Utility2.getTerrainFactor(game, new Position(12,12)), is(1));
+        game.moveUnit(new Position(11,11), new Position(12,12));
+        assertThat(game.getUnitAt(new Position(12,12)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(11,11)), is(nullValue()));
+    }
+
+    @Test
+    public void friendlySupportIsAddedAsStrengthIfPresent () {
+
+    }
+
+
 
 
 }

@@ -16,12 +16,23 @@ public class UnitImpl implements Unit {
         this.unitType = unitType;
         moveCount = 1;
         unitAction = true;
-        if(unitType.equals(GameConstants.ARCHER)){
-            defensiveStrength = 3;
-        } else if (unitType.equals(GameConstants.LEGION)){
-            defensiveStrength = 2;
-        } else if(unitType.equals(GameConstants.SETTLER)){
-            defensiveStrength = 3;
+        setUpStrength();
+    }
+
+    private void setUpStrength() {
+        switch (unitType){
+            case GameConstants.ARCHER:
+                defensiveStrength = GameConstants.ARCHER_DEFENCE;
+                attackingStrength = GameConstants.ARCHER_ATTACK;
+                break;
+            case GameConstants.LEGION:
+                defensiveStrength = GameConstants.LEGION_DEFENCE;
+                attackingStrength = GameConstants.LEGION_ATTACK;
+                break;
+            case GameConstants.SETTLER:
+                defensiveStrength = GameConstants.SETTLER_DEFENCE;
+                attackingStrength = GameConstants.SETTLER_ATTACK;
+                break;
         }
     }
 

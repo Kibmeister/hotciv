@@ -92,18 +92,40 @@ public class GameImpl implements Game {
     }
 
     public boolean moveUnit(Position from, Position to) {
+        if (!validMove(from, to)) {
+            return false;
+        }
+        boolean enemyUnit = units.containsKey(to);
 
-        if (!validMove(from, to)) { return false ; }
+        if (enemyUnit) {
+            attackUnit(from, to);
+            return true;
+        }
+        createUnit(to, units.get(from));
+        deductMoveCount(to);
+        removeUnit(from);
+        setUnitOwner(to);
+        endOfTurn();
 
+        return true;
+    }
+
+    public void attackUnit(Position from, Position to) {
+        boolean victory = attackStrategy.battleOutcome(from, to , this);
+        if(victory){
             createUnit(to, units.get(from));
-
             deductMoveCount(to);
             removeUnit(from);
             setUnitOwner(to);
             endOfTurn();
+        } else {
+            removeUnit(from);
+            endOfTurn();
+        }
 
-            return true;
+
     }
+
 
     private void setUnitOwner(Position to) {
         if (cities.containsKey(to)) {
@@ -125,8 +147,9 @@ public class GameImpl implements Game {
         boolean playerInTurnUnit = units.get(from).getOwner() == getPlayerInTurn();
         if (!playerInTurnUnit) {
             return false;
-        }boolean unitHasMoved = units.get(from).getMoveCount() < 1;
-        if(unitHasMoved){
+        }
+        boolean unitHasMoved = units.get(from).getMoveCount() < 1;
+        if (unitHasMoved) {
             return false;
         }
 
@@ -143,6 +166,13 @@ public class GameImpl implements Game {
         boolean unitAction = units.get(from).getUnitAction();
         if (!unitAction) {
             return false;
+        }
+
+        if (units.containsKey(to)) {
+            boolean friendlyUnitAtTo = getUnitAt(to).getOwner() == getPlayerInTurn();
+            if (friendlyUnitAtTo) {
+                return false;
+            }
         }
 
         return true;

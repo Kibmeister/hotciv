@@ -8,6 +8,6 @@ public class AlphaAttackStrategy implements AttackStrategy {
 
     @Override
     public boolean battleOutcome(Position from, Position to, GameImpl game) {
-        return false;
+        return true;
     }
 }

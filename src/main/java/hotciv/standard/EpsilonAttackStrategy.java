@@ -15,14 +15,8 @@ public class EpsilonAttackStrategy implements AttackStrategy {
         int d = defenderStrength(to, game);
         boolean attackerWins = (a > d);
         if(attackerWins){
-            game.createUnit(to, game.getUnitAt(from));
-            game.removeUnit(to);
-            // remove defending unit
-            // move the new unit to the position of the defending unit
             return true;
         } else {
-            game.removeUnit(from);
-            // the attacking unit is removed from the world
             return false;
         }
     }

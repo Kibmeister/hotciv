@@ -14,3 +14,8 @@ Test list for HotCiv Epsilon
 [OK] should give friendly support 1 for blue at 2dot4 (henrik's test cases)
 [OK] should give friendly support 3 for red at 2dot0 (henrik's test cases)
 [OK] should give friendly support 2 for red at 1dot1 (henrik's test cases)
+[OK] the strongest unit wins the battle
+[OK] there is a defeat if the defending player is strongest
+[] friendly support is added as strength if present
+
+

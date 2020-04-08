@@ -41,6 +41,11 @@ public class GameConstants {
     public static final int LEGION_DEFENCE = 2;
     public static final int SETTLER_DEFENCE = 3;
 
+    public static final int ARCHER_ATTACK = 2;
+    public static final int LEGION_ATTACK = 4;
+    public static final int SETTLER_ATTACK = 0;
+
+
     // Valid terrain types
     public static final String PLAINS = "plains";
     public static final String OCEANS = "ocean";
@@ -64,4 +69,6 @@ public class GameConstants {
 
         }
     }
+
+
 }

@@ -130,19 +130,117 @@ public class TestEpsilonCiv {
         game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
         assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(0)); // +0 attack strength
         assertThat(Utility2.getFriendlySupport(game ,new Position (12,12), game.getUnitAt(new Position (12,12)).getOwner()), is(0)); // +0 defensive strength
-        assertThat(Utility2.getTerrainFactor(game, new Position(11,11)), is(1));
-        assertThat(Utility2.getTerrainFactor(game, new Position(12,12)), is(1));
+        assertThat(Utility2.getTerrainFactor(game, new Position(11,11)), is(1)); // *1 terrain factor
+        assertThat(Utility2.getTerrainFactor(game, new Position(12,12)), is(1)); // *1 terrain factor
         game.moveUnit(new Position(11,11), new Position(12,12));
         assertThat(game.getUnitAt(new Position(12,12)).getOwner(), is(Player.BLUE));
         assertThat(game.getUnitAt(new Position(11,11)), is(nullValue()));
     }
 
     @Test
-    public void friendlySupportIsAddedAsStrengthIfPresent () {
+    public void defendingPlayerWinsWhenWinningTheBattleWithFriendlySupport () {
+        GameImpl game = new GameImpl(
+                new EpsilonWinnerStrategy(),
+                new AlphaAgingStrategy(),
+                new AlphaUnitStrategy(),
+                new AlphaWorldLayoutStrategy(),
+                new EpsilonAttackStrategy (new FixedBattleProbability(1,1)));
+        game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.LEGION)); // 4+ attack strength
+        game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
+        game.createUnit(new Position(12,13), new UnitImpl(Player.BLUE, GameConstants.ARCHER)); // +1 defensive support strength
+        game.createUnit(new Position(13,12), new UnitImpl(Player.BLUE, GameConstants.SETTLER)); // +1 defensive support strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(0)); // +0 attack strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (12,12), game.getUnitAt(new Position (12,12)).getOwner()), is(2)); // +2 defensive strength
+        assertThat(Utility2.getTerrainFactor(game, new Position(11,11)), is(1)); // *1 terrain factor
+        assertThat(Utility2.getTerrainFactor(game, new Position(12,12)), is(1)); // *1 terrain factor
+        game.moveUnit(new Position(11,11), new Position(12,12)); // attack vs defend = (4+0)*1*1 vs (2+1+1)*1*1 = defender wins
+        assertThat(game.getUnitAt(new Position(12,12)).getOwner(), is(Player.BLUE));
+        assertThat(game.getUnitAt(new Position(11,11)), is(nullValue()));
 
     }
+    @Test
+    public void attackingPlayerWinsWhenGettingSupportFromFriendlyUnits () {
+        GameImpl game = new GameImpl(
+                new EpsilonWinnerStrategy(),
+                new AlphaAgingStrategy(),
+                new AlphaUnitStrategy(),
+                new AlphaWorldLayoutStrategy(),
+                new EpsilonAttackStrategy (new FixedBattleProbability(1,1)));
+        game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.ARCHER)); // 2+ attack strength
+        game.createUnit(new Position(11,10), new UnitImpl(Player.RED, GameConstants.SETTLER)); // +1 attack supportive strength
 
+        game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(1)); // +0 attack strength
+        assertThat(Utility2.getFriendlySupport(game ,new Position (12,12), game.getUnitAt(new Position (12,12)).getOwner()), is(0)); // +0 defensive strength
+        assertThat(Utility2.getTerrainFactor(game, new Position(11,11)), is(1)); // *1 terrain factor
+        assertThat(Utility2.getTerrainFactor(game, new Position(12,12)), is(1)); // *1 terrain factor
+        game.moveUnit(new Position(11,11), new Position(12,12)); // attack vs defend = (4+0)*1*1 vs (2+1+1)*1*1 = defender wins
+        assertThat(game.getUnitAt(new Position(12,12)).getOwner(), is(Player.RED));
+        assertThat(game.getUnitAt(new Position(12,12)).getTypeString(), is(GameConstants.ARCHER));
+    }
+    @Test
+    public void theWinnerIsTheFirstToWinThreeSuccessfulAttacks () {
+        GameImpl game = new GameImpl(
+                new EpsilonWinnerStrategy(),
+                new AlphaAgingStrategy(),
+                new AlphaUnitStrategy(),
+                new AlphaWorldLayoutStrategy(),
+                new EpsilonAttackStrategy(new FixedBattleProbability(10, 1)));
+        assertNull(game.getWinner());
+        game.createUnit(new Position(12, 12), new UnitImpl(Player.RED, GameConstants.ARCHER));    // red wins
+        game.createUnit(new Position(12, 13), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+        game.moveUnit(new Position(12, 12), new Position(12, 13));
+        assertThat(game.getUnitAt(new Position(12, 13)).getOwner(), is(Player.RED));
 
+        game.endOfTurn();
+        game.createUnit(new Position(9, 9), new UnitImpl(Player.RED, GameConstants.ARCHER));    // red wins
+        game.createUnit(new Position(8, 9), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+        game.moveUnit(new Position(9, 9), new Position(8, 9));
+        assertThat(game.getUnitAt(new Position(8, 9)).getOwner(), is(Player.RED));
 
+        game.createUnit(new Position(14, 14), new UnitImpl(Player.BLUE, GameConstants.ARCHER));   // blue wins
+        game.createUnit(new Position(13, 14), new UnitImpl(Player.RED, GameConstants.LEGION));
+        game.moveUnit(new Position(14, 14), new Position(13, 14));
+        assertThat(game.getUnitAt(new Position(13, 14)).getOwner(), is(Player.BLUE));
 
+       game.createUnit(new Position(14,10 ), new UnitImpl(Player.RED, GameConstants.ARCHER));   // red wins
+        game.createUnit(new Position(13, 9), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+        game.moveUnit(new Position(14, 10), new Position(13, 9));
+        assertThat(game.getUnitAt(new Position(13, 9)).getOwner(), is(Player.RED));
+
+       assertThat(game.getWinner(), is(Player.RED));
+    }
+
+    @Test
+    public void threeSuccessfulDefeatsWontMakeYouAWinner (){
+         GameImpl game = new GameImpl(
+                 new EpsilonWinnerStrategy(),
+                 new AlphaAgingStrategy(),
+                 new AlphaUnitStrategy(),
+                 new AlphaWorldLayoutStrategy(),
+                 new EpsilonAttackStrategy(new FixedBattleProbability(1, 10)));
+         assertNull(game.getWinner());
+         game.createUnit(new Position(12, 12), new UnitImpl(Player.RED, GameConstants.ARCHER));    // BLUE wins
+         game.createUnit(new Position(12, 13), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+         game.moveUnit(new Position(12, 12), new Position(12, 13));
+         assertThat(game.getUnitAt(new Position(12, 13)).getOwner(), is(Player.BLUE));
+
+         game.endOfTurn();
+         game.createUnit(new Position(9, 9), new UnitImpl(Player.RED, GameConstants.ARCHER));    // BLUE wins
+         game.createUnit(new Position(8, 9), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+         game.moveUnit(new Position(9, 9), new Position(8, 9));
+         assertThat(game.getUnitAt(new Position(8, 9)).getOwner(), is(Player.BLUE));
+
+         game.createUnit(new Position(14, 14), new UnitImpl(Player.BLUE, GameConstants.ARCHER));   // RED wins
+         game.createUnit(new Position(13, 14), new UnitImpl(Player.RED, GameConstants.LEGION));
+         game.moveUnit(new Position(14, 14), new Position(13, 14));
+         assertThat(game.getUnitAt(new Position(13, 14)).getOwner(), is(Player.RED));
+
+        game.createUnit(new Position(14,10 ), new UnitImpl(Player.RED, GameConstants.ARCHER));   // BLUE wins
+         game.createUnit(new Position(13, 9), new UnitImpl(Player.BLUE, GameConstants.LEGION));
+         game.moveUnit(new Position(14, 10), new Position(13, 9));
+         assertThat(game.getUnitAt(new Position(13, 9)).getOwner(), is(Player.BLUE));
+
+         assertThat(game.getWinner(), is(nullValue()));
+    }
 }

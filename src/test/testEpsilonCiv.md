@@ -16,6 +16,10 @@ Test list for HotCiv Epsilon
 [OK] should give friendly support 2 for red at 1dot1 (henrik's test cases)
 [OK] the strongest unit wins the battle
 [OK] there is a defeat if the defending player is strongest
-[] friendly support is added as strength if present
+[OK] defending player wins battle when strongest and receive support form friendly units
+[OK] the winner is the first player to win three successful attacks
+[] three successful defeats wont make you a winner
+
+
 
 

@@ -22,4 +22,9 @@ public class BetaWinnerStrategy implements WinnerStrategy {
         System.out.println("Dette er winneren: " + winner);
         return winner;
     }
+
+    @Override
+    public void setWinner(Player battleWinner) {
+
+    }
 }

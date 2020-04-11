@@ -15,4 +15,9 @@ public class AlphaWinnerStrategy implements WinnerStrategy {
             return null;
         }
     }
+
+    @Override
+    public void setWinner(Player battleWinner) {
+
+    }
 }

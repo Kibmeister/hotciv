@@ -112,11 +112,13 @@ public class GameImpl implements Game {
 
     public void attackUnit(Position from, Position to) {
         boolean victory = attackStrategy.battleOutcome(from, to , this);
+        Player battleWinner  = getUnitAt(from).getOwner();
         if(victory){
-            createUnit(to, units.get(from));
+            createUnit(to, getUnitAt(from));
             deductMoveCount(to);
             removeUnit(from);
             setUnitOwner(to);
+            winnerStrategy.setWinner(battleWinner);
             endOfTurn();
         } else {
             removeUnit(from);
@@ -298,5 +300,9 @@ public class GameImpl implements Game {
 
     public void removeUnit(Position p) {
         units.remove(p);
+    }
+
+    public HashMap<Position, UnitImpl> getUnits() {
+        return units;
     }
 }

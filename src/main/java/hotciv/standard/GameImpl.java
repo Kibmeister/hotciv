@@ -96,36 +96,33 @@ public class GameImpl implements Game {
             return false;
         }
         boolean enemyUnit = units.containsKey(to);
-
         if (enemyUnit) {
             attackUnit(from, to);
             return true;
         }
-        createUnit(to, units.get(from));
-        deductMoveCount(to);
-        removeUnit(from);
-        setUnitOwner(to);
-        endOfTurn();
-
+        unitReplacement(from, to);
         return true;
     }
 
     public void attackUnit(Position from, Position to) {
-        boolean victory = attackStrategy.battleOutcome(from, to , this);
-        Player battleWinner  = getUnitAt(from).getOwner();
-        if(victory){
-            createUnit(to, getUnitAt(from));
-            deductMoveCount(to);
-            removeUnit(from);
-            setUnitOwner(to);
+        boolean victory = attackStrategy.battleOutcome(from, to, this);
+        Player battleWinner = getUnitAt(from).getOwner();
+        if (victory) {
             winnerStrategy.setWinner(battleWinner);
-            endOfTurn();
+            unitReplacement(from, to);
         } else {
             removeUnit(from);
             endOfTurn();
         }
 
+    }
 
+    public void unitReplacement(Position from, Position to) {
+        createUnit(to, getUnitAt(from));
+        deductMoveCount(to);
+        removeUnit(from);
+        setUnitOwner(to);
+        endOfTurn();
     }
 
 
@@ -194,13 +191,27 @@ public class GameImpl implements Game {
             playerInTurn = Player.BLUE;
         } else {
             playerInTurn = Player.RED;
-            for (UnitImpl u : units.values()) {
-                u.setMoveCount(1);
-            }
+            incrementMoveCount();
             produceUnits();
-            gameAge += agingStrategy.worldAges();
+            setGameAge();
+            roundEnded();
+        }
+    }
+
+    public void incrementMoveCount() {
+        for (UnitImpl u : units.values()) {
+            u.setMoveCount(1);
         }
 
+    }
+
+    public void roundEnded() {
+        winnerStrategy.roundEnded(this);
+    }
+
+
+    public void setGameAge() {
+        gameAge += agingStrategy.worldAges();
     }
 
     public void produceUnits() {

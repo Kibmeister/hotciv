@@ -4,13 +4,18 @@ import hotciv.framework.Player;
 import hotciv.framework.WinnerStrategy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EpsilonWinnerStrategy implements WinnerStrategy {
     private ArrayList<Player> battleWinners;
+    private HashMap<Player, Integer> winners;
     private Player winner;
 
     public EpsilonWinnerStrategy (){
         this.battleWinners = new ArrayList<>();
+        this.winners = new HashMap<>();
+
+
     }
     @Override
     public Player getWinner(GameImpl game) { return winner; }
@@ -18,8 +23,20 @@ public class EpsilonWinnerStrategy implements WinnerStrategy {
     @Override
     public void setWinner(Player battleWinner) {
 
-        battleWinners.add(battleWinner);
-        boolean threeWinsOrMore = battleWinners.size() >= 3;
+        /*battleWinners.add(battleWinner);*/
+
+        if(winners.containsKey(battleWinner)){ // se om spilleren har vunnet før
+            int currentNumberOfWins = winners.get(battleWinner); // isåfall, finn ut hvor mange wins han har
+            winners.put(battleWinner, currentNumberOfWins + 1); // legg til antall wins + leg til et win
+        } else {
+            winners.put(battleWinner, 1); // hvis han ikke har vunnet før, leg til winnere og en win
+        }
+
+        calculateWinner(battleWinner);
+
+
+
+       /* boolean threeWinsOrMore = battleWinners.size() >= 3;
         int redWinner = 0;
         int blueWinner = 0;
 
@@ -39,8 +56,20 @@ public class EpsilonWinnerStrategy implements WinnerStrategy {
                 }
             }
 
-        }
+        }*/
 
+
+    }
+
+    public void calculateWinner(Player battleWinner) {
+        boolean weHaveAWinner = winners.get(battleWinner) >= 3;
+        if(weHaveAWinner){
+            winner = battleWinner;
+        }
+    }
+
+    @Override
+    public void roundEnded(GameImpl game) {
 
     }
 

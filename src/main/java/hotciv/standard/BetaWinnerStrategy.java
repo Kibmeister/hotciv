@@ -27,4 +27,9 @@ public class BetaWinnerStrategy implements WinnerStrategy {
     public void setWinner(Player battleWinner) {
 
     }
+
+    @Override
+    public void roundEnded(GameImpl game) {
+
+    }
 }

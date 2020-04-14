@@ -20,4 +20,9 @@ public class AlphaWinnerStrategy implements WinnerStrategy {
     public void setWinner(Player battleWinner) {
 
     }
+
+    @Override
+    public void roundEnded(GameImpl game) {
+
+    }
 }

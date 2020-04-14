@@ -18,7 +18,7 @@ Test list for HotCiv Epsilon
 [OK] there is a defeat if the defending player is strongest
 [OK] defending player wins battle when strongest and receive support form friendly units
 [OK] the winner is the first player to win three successful attacks
-[] three successful defeats wont make you a winner
+[Ok] three successful defeats wont make you a winner
 
 
 

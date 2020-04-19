@@ -2,7 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-import hotciv.framework.factories.GammaCivFactory;
+import hotciv.standard.factories.GammaCivFactory;
 import org.junit.*;
 
 import static org.junit.Assert.*;

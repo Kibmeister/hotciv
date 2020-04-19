@@ -1,4 +1,4 @@
-package hotciv.framework.factories;
+package hotciv.standard.factories;
 
 import hotciv.framework.*;
 

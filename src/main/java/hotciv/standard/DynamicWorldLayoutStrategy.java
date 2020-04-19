@@ -24,25 +24,25 @@ public class DynamicWorldLayoutStrategy implements WorldLayoutStrategy {
         world = new HashMap<>();
         units = new HashMap<>();
         cities = new HashMap<>();
-        this.layout =
-                new String[] {
-                        "...ooMooooo.....",
-                        "..ohhoooofffoo..",
-                        ".oooooMooo...oo.",
-                        ".ooMMMoooo..oooo",
-                        "...ofooohhoooo..",
-                        ".ofoofooooohhoo.",
-                        "...ooo..........",
-                        ".ooooo.ooohooM..",
-                        ".ooooo.oohooof..",
-                        "offfoooo.offoooo",
-                        "oooooooo...ooooo",
-                        ".ooMMMoooo......",
-                        "..ooooooffoooo..",
-                        "....ooooooooo...",
-                        "..ooohhoo.......",
-                        ".....ooooooooo..",
-                };
+        this.layout = new String[] {
+                "...ooMooooo.....",
+                "..ohhoooofffoo..",
+                ".oooooMooo...oo.",
+                ".ooMMMoooo..oooo",
+                "...ofooohhoooo..",
+                ".ofoofooooohhoo.",
+                "...ooo..........",
+                ".ooooo.ooohooM..",
+                ".ooooo.oohooof..",
+                "offfoooo.offoooo",
+                "oooooooo...ooooo",
+                ".ooMMMoooo......",
+                "..ooooooffoooo..",
+                "....ooooooooo...",
+                "..ooohhoo.......",
+                ".....ooooooooo..",
+        };
+
     }
 
 

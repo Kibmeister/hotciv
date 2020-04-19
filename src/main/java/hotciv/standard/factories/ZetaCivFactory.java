@@ -1,8 +1,8 @@
-package hotciv.framework.factories;
+package hotciv.standard.factories;
 
 import hotciv.framework.*;
 
-public class BetaCivFactory implements GameFactory {
+public class ZetaCivFactory implements GameFactory {
     @Override
     public WinnerStrategy createWinnerStrategy() {
         return null;

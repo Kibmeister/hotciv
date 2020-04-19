@@ -1,17 +1,17 @@
-package hotciv.framework.factories;
+package hotciv.standard.factories;
 
 import hotciv.framework.*;
 import hotciv.standard.*;
 
-public class AlphaCivFactory implements GameFactory {
+public class BetaCivFactory implements GameFactory {
     @Override
     public WinnerStrategy createWinnerStrategy() {
-        return new Red3000BCWinnerStrategy();
+        return new AllCitiesWinnerStrategy();
     }
 
     @Override
     public AgingStrategy createAgingStrategy() {
-        return new LinearAgeStrategy();
+        return new VariableAgeStrategy ();
     }
 
     @Override

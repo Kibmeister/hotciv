@@ -1,7 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.framework.factories.EpsilonCivFactory;
+import hotciv.standard.factories.EpsilonCivFactory;
 import org.junit.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -100,6 +100,7 @@ public class TestEpsilonCiv {
     @Test
     public void theStrongestPlayerWinsTheBattle(){
         GameImpl game = new GameImpl(new EpsilonCivFactory());
+
         game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.LEGION)); // 4+ attack strength
         game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
         assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(0)); // +0 attack strength

@@ -2,7 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-import hotciv.framework.factories.DeltaCivFactory;
+import hotciv.standard.factories.DeltaCivFactory;
 import org.junit.*;
 
 import static org.junit.Assert.*;
@@ -10,7 +10,25 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class TestDeltaCiv  {
 
-    private Game game;
+    private GameImpl game;
+    private String[] hills = new String[] {
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh",
+                "hhhhhhhhhhhhhhhh"};
+
 
     @Before
     public void setUp () {
@@ -62,29 +80,14 @@ public class TestDeltaCiv  {
     @Test
     public void hillsAtAllTiles (){
 
-        String[] hills = new String[] {
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh",
-                "hhhhhhhhhhhhhhhh"};
 
-        GameImpl game = new GameImpl(new DeltaCivFactory());
+        game.changeGameWorldLayout(new DynamicWorldLayoutStrategy(hills));
+
+        assertThat(game.getTileAt(new Position(14,14)).getTypeString(), is(GameConstants.HILLS));
 
         for(int i = 0 ; i < GameConstants.WORLDSIZE; i ++){
             for(int j = 0; j < GameConstants.WORLDSIZE; j++){
-                assertThat(game.getTileAt(new Position(i,j)).getTypeString(), is(GameConstants.HILLS));
+               assertThat(game.getTileAt(new Position(i,j)).getTypeString(), is(GameConstants.HILLS));
             }
         }
     }

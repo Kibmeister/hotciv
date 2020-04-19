@@ -1,11 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.framework.factories.AlphaCivFactory;
-import javafx.geometry.Pos;
 
-import javax.swing.plaf.synth.SynthEditorPaneUI;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -49,14 +45,14 @@ public class GameImpl implements Game {
     private AttackStrategy attackStrategy;
 
 
-   public GameImpl(GameFactory gameFactory){
+    public GameImpl(GameFactory gameFactory) {
         this.winnerStrategy = gameFactory.createWinnerStrategy();
         this.agingStrategy = gameFactory.createAgingStrategy();
         this.unitStrategy = gameFactory.createUnitStrategy();
         this.worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
         this.attackStrategy = gameFactory.createAttackStrategy();
-        main ();
-   }
+        main();
+    }
 
     public void main() {
         playerInTurn = Player.RED;
@@ -313,4 +309,10 @@ public class GameImpl implements Game {
     public HashMap<Position, UnitImpl> getUnits() {
         return units;
     }
+
+    public void changeGameWorldLayout(WorldLayoutStrategy layoutStrategy) {
+        this.worldLayoutStrategy = layoutStrategy;
+        setGameLayoutStrategy();
+    }
+
 }

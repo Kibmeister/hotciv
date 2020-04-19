@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.framework.factories.ZetaCivFactory;
 import org.junit.*;
 
 import static org.junit.Assert.*;
@@ -12,11 +13,7 @@ public class TestZetaCiv {
 
     @Before
     public void setUp() {
-        game = new GameImpl(new ZetaWinnerStrategy(new BetaWinnerStrategy(), new EpsilonWinnerStrategy()),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new AlphaAttackStrategy());
+        game = new GameImpl(new ZetaCivFactory());
     }
 
     @Test

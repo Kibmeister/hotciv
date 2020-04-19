@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.framework.factories.AlphaCivFactory;
 import javafx.geometry.Pos;
 
 import javax.swing.plaf.synth.SynthEditorPaneUI;
@@ -48,18 +49,14 @@ public class GameImpl implements Game {
     private AttackStrategy attackStrategy;
 
 
-    public GameImpl(WinnerStrategy winnerStrategy,
-                    AgingStrategy agingStrategy,
-                    UnitStrategy unitStrategy,
-                    WorldLayoutStrategy worldLayoutStrategy,
-                    AttackStrategy attackStrategy) {
-        this.winnerStrategy = winnerStrategy;
-        this.agingStrategy = agingStrategy;
-        this.unitStrategy = unitStrategy;
-        this.worldLayoutStrategy = worldLayoutStrategy;
-        this.attackStrategy = attackStrategy;
-        main();
-    }
+   public GameImpl(GameFactory gameFactory){
+        this.winnerStrategy = gameFactory.createWinnerStrategy();
+        this.agingStrategy = gameFactory.createAgingStrategy();
+        this.unitStrategy = gameFactory.createUnitStrategy();
+        this.worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
+        this.attackStrategy = gameFactory.createAttackStrategy();
+        main ();
+   }
 
     public void main() {
         playerInTurn = Player.RED;

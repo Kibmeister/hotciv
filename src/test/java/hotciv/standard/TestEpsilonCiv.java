@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.framework.factories.EpsilonCivFactory;
 import org.junit.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -11,12 +12,7 @@ public class TestEpsilonCiv {
 
     @Before
     public void setUp(){
-        this.game = new GameImpl(
-                new EpsilonWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new EpsilonAttackStrategy (new FixedBattleProbability()));
+        this.game = new GameImpl(new EpsilonCivFactory());
     }
 
     @Test
@@ -103,12 +99,7 @@ public class TestEpsilonCiv {
     }
     @Test
     public void theStrongestPlayerWinsTheBattle(){
-        GameImpl game = new GameImpl(
-                new EpsilonWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new EpsilonAttackStrategy (new FixedBattleProbability(5,1)));
+        GameImpl game = new GameImpl(new EpsilonCivFactory());
         game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.LEGION)); // 4+ attack strength
         game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
         assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(0)); // +0 attack strength
@@ -120,12 +111,7 @@ public class TestEpsilonCiv {
     }
     @Test
     public void thereIsADefeatIfTheDefendingPlayerIsStrongest () {
-        GameImpl game = new GameImpl(
-                new EpsilonWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new EpsilonAttackStrategy (new FixedBattleProbability(1,10)));
+        GameImpl game = new GameImpl(new EpsilonCivFactory());
         game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.LEGION)); // 4+ attack strength
         game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
         assertThat(Utility2.getFriendlySupport(game ,new Position (11,11), game.getUnitAt(new Position (11,11)).getOwner()), is(0)); // +0 attack strength
@@ -139,12 +125,7 @@ public class TestEpsilonCiv {
 
     @Test
     public void defendingPlayerWinsWhenWinningTheBattleWithFriendlySupport () {
-        GameImpl game = new GameImpl(
-                new EpsilonWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new EpsilonAttackStrategy (new FixedBattleProbability(1,1)));
+        GameImpl game = new GameImpl(new EpsilonCivFactory());
         game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.LEGION)); // 4+ attack strength
         game.createUnit(new Position(12,12), new UnitImpl(Player.BLUE, GameConstants.LEGION)); // +2 defensive strength
         game.createUnit(new Position(12,13), new UnitImpl(Player.BLUE, GameConstants.ARCHER)); // +1 defensive support strength
@@ -160,12 +141,7 @@ public class TestEpsilonCiv {
     }
     @Test
     public void attackingPlayerWinsWhenGettingSupportFromFriendlyUnits () {
-        GameImpl game = new GameImpl(
-                new EpsilonWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new EpsilonAttackStrategy (new FixedBattleProbability(1,1)));
+        GameImpl game = new GameImpl(new EpsilonCivFactory());
         game.createUnit(new Position(11,11), new UnitImpl(Player.RED, GameConstants.ARCHER)); // 2+ attack strength
         game.createUnit(new Position(11,10), new UnitImpl(Player.RED, GameConstants.SETTLER)); // +1 attack supportive strength
 
@@ -180,12 +156,7 @@ public class TestEpsilonCiv {
     }
     @Test
     public void theWinnerIsTheFirstToWinThreeSuccessfulAttacks () {
-        GameImpl game = new GameImpl(
-                new EpsilonWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new EpsilonAttackStrategy(new FixedBattleProbability(10, 1)));
+        GameImpl game = new GameImpl(new EpsilonCivFactory() );
         assertNull(game.getWinner());
         game.createUnit(new Position(12, 12), new UnitImpl(Player.RED, GameConstants.ARCHER));    // red wins
         game.createUnit(new Position(12, 13), new UnitImpl(Player.BLUE, GameConstants.LEGION));
@@ -213,12 +184,7 @@ public class TestEpsilonCiv {
 
     @Test
     public void threeSuccessfulDefeatsWontMakeYouAWinner (){
-         GameImpl game = new GameImpl(
-                 new EpsilonWinnerStrategy(),
-                 new AlphaAgingStrategy(),
-                 new AlphaUnitStrategy(),
-                 new AlphaWorldLayoutStrategy(),
-                 new EpsilonAttackStrategy(new FixedBattleProbability(1, 10)));
+         GameImpl game = new GameImpl(new EpsilonCivFactory());
          assertNull(game.getWinner());
          game.createUnit(new Position(12, 12), new UnitImpl(Player.RED, GameConstants.ARCHER));    // BLUE wins
          game.createUnit(new Position(12, 13), new UnitImpl(Player.BLUE, GameConstants.LEGION));

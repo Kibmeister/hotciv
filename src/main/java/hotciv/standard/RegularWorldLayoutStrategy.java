@@ -8,13 +8,13 @@ import hotciv.framework.WorldLayoutStrategy;
 
 import java.util.HashMap;
 
-public class AlphaWorldLayoutStrategy implements WorldLayoutStrategy {
+public class RegularWorldLayoutStrategy implements WorldLayoutStrategy {
 
     private HashMap<Position, TileImpl> world;
     private HashMap<Position, UnitImpl> units;
     private HashMap<Position, CityImpl> cities;
 
-    public AlphaWorldLayoutStrategy () {
+    public RegularWorldLayoutStrategy() {
         world = new HashMap<>();
         units = new HashMap<>();
         cities = new HashMap<>();

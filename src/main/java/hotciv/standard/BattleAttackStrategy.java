@@ -2,10 +2,10 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-public class EpsilonAttackStrategy implements AttackStrategy {
+public class BattleAttackStrategy implements AttackStrategy {
     private BattleProbability battleProbability;
 
-    public EpsilonAttackStrategy(BattleProbability battleProbability) {
+    public BattleAttackStrategy(BattleProbability battleProbability) {
         this.battleProbability = battleProbability;
     }
 

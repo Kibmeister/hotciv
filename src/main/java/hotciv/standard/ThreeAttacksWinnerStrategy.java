@@ -6,12 +6,12 @@ import hotciv.framework.WinnerStrategy;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class EpsilonWinnerStrategy implements WinnerStrategy {
+public class ThreeAttacksWinnerStrategy implements WinnerStrategy {
     private ArrayList<Player> battleWinners;
     private HashMap<Player, Integer> winners;
     private Player winner;
 
-    public EpsilonWinnerStrategy (){
+    public ThreeAttacksWinnerStrategy(){
         this.battleWinners = new ArrayList<>();
         this.winners = new HashMap<>();
 

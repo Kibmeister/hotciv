@@ -2,7 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.AgingStrategy;
 
-public class BetaAgingStrategy implements AgingStrategy {
+public class VariableAgeStrategy implements AgingStrategy {
 
     int roundNumber;
 

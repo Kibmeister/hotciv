@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.framework.factories.DeltaCivFactory;
 import org.junit.*;
 
 import static org.junit.Assert.*;
@@ -13,11 +14,7 @@ public class TestDeltaCiv  {
 
     @Before
     public void setUp () {
-        game = new GameImpl(new AlphaWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new DeltaWorldLayoutStrategy(),
-                new AlphaAttackStrategy());
+        game = new GameImpl(new DeltaCivFactory());
     }
     @Test
     public void shouldBeRedAsStartingPlayer() {
@@ -83,11 +80,7 @@ public class TestDeltaCiv  {
                 "hhhhhhhhhhhhhhhh",
                 "hhhhhhhhhhhhhhhh"};
 
-        GameImpl game = new GameImpl(new AlphaWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new DeltaWorldLayoutStrategy(hills),
-                new AlphaAttackStrategy());
+        GameImpl game = new GameImpl(new DeltaCivFactory());
 
         for(int i = 0 ; i < GameConstants.WORLDSIZE; i ++){
             for(int j = 0; j < GameConstants.WORLDSIZE; j++){

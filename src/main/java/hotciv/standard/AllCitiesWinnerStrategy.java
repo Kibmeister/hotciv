@@ -5,7 +5,7 @@ import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.WinnerStrategy;
 
-public class BetaWinnerStrategy implements WinnerStrategy {
+public class AllCitiesWinnerStrategy implements WinnerStrategy {
     public Player winner;
     @Override
     public Player getWinner(GameImpl game) {

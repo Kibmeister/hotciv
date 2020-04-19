@@ -1,10 +1,9 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.framework.factories.BetaCivFactory;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.annotation.PostConstruct;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -16,11 +15,7 @@ public class TestBetaCiv {
 
     @Before
     public void setUp (){
-        this.game = new GameImpl(new BetaWinnerStrategy(),
-                new BetaAgingStrategy (),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new AlphaAttackStrategy());
+        this.game = new GameImpl(new BetaCivFactory());
     }
     public void roundCounter (int i) {
         for(int j = 0; j < i; j ++){

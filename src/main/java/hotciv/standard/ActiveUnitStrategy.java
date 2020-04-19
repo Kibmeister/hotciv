@@ -3,7 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 
-public class GammaUnitStrategy implements UnitStrategy {
+public class ActiveUnitStrategy implements UnitStrategy {
     @Override
     public void unitAction(Position p, GameImpl game) {
         UnitImpl u = game.getUnitAt(p);

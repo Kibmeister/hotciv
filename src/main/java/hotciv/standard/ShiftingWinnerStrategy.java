@@ -3,12 +3,12 @@ package hotciv.standard;
 import hotciv.framework.Player;
 import hotciv.framework.WinnerStrategy;
 
-public class ZetaWinnerStrategy implements WinnerStrategy {
+public class ShiftingWinnerStrategy implements WinnerStrategy {
     private WinnerStrategy betaWinnerStrategy, epsilonWinnerStrategy, currentWinnerStrategy;
     private int round;
     private boolean exceeded20rounds;
 
-    public ZetaWinnerStrategy(BetaWinnerStrategy betaWinnerStrategy, EpsilonWinnerStrategy epsilonWinnerStrategy) {
+    public ShiftingWinnerStrategy(AllCitiesWinnerStrategy betaWinnerStrategy, ThreeAttacksWinnerStrategy epsilonWinnerStrategy) {
         this.betaWinnerStrategy = betaWinnerStrategy;
         this.epsilonWinnerStrategy = epsilonWinnerStrategy;
         this.currentWinnerStrategy = betaWinnerStrategy;

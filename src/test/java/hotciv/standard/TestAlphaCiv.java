@@ -2,12 +2,11 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.framework.factories.AlphaCivFactory;
 import org.junit.*;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-
-import java.util.*;
 
 /**
  * Skeleton class for AlphaCiv test cases
@@ -45,11 +44,7 @@ public class TestAlphaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new AlphaWinnerStrategy(),
-                new AlphaAgingStrategy(),
-                new AlphaUnitStrategy(),
-                new AlphaWorldLayoutStrategy(),
-                new AlphaAttackStrategy());
+        game = new GameImpl(new AlphaCivFactory());
     }
 
     @Test

@@ -8,19 +8,19 @@ import hotciv.framework.WorldLayoutStrategy;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class DeltaWorldLayoutStrategy implements WorldLayoutStrategy {
+public class DynamicWorldLayoutStrategy implements WorldLayoutStrategy {
     private HashMap<Position, TileImpl> world;
     private HashMap<Position, UnitImpl> units;
     private HashMap<Position, CityImpl> cities;
     private String[] layout;
 
-    public DeltaWorldLayoutStrategy(String[] layout){
+    public DynamicWorldLayoutStrategy(String[] layout){
         world = new HashMap<>();
         units = new HashMap<>();
         cities = new HashMap<>();
         this.layout = layout;
     }
-    public DeltaWorldLayoutStrategy(){
+    public DynamicWorldLayoutStrategy(){
         world = new HashMap<>();
         units = new HashMap<>();
         cities = new HashMap<>();

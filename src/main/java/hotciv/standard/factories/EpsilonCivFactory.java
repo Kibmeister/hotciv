@@ -4,6 +4,15 @@ import hotciv.framework.*;
 import hotciv.standard.*;
 
 public class EpsilonCivFactory implements GameFactory {
+    public BattleProbability battleProbability;
+
+    public EpsilonCivFactory () {
+        this.battleProbability = new RandomBattleProbability();
+    }
+    public EpsilonCivFactory (BattleProbability battleProbability){
+        this.battleProbability = battleProbability;
+    }
+
 
     @Override
     public WinnerStrategy createWinnerStrategy() {
@@ -27,6 +36,6 @@ public class EpsilonCivFactory implements GameFactory {
 
     @Override
     public AttackStrategy createAttackStrategy() {
-        return new BattleAttackStrategy(new RandomBattleProbability()) ;
+        return new BattleAttackStrategy(battleProbability) ;
     }
 }

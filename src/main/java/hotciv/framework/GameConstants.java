@@ -36,14 +36,17 @@ public class GameConstants {
     public static final String ARCHER = "archer";
     public static final String LEGION = "legion";
     public static final String SETTLER = "settler";
+    public static final String B52 = "b52";
 
     public static final int ARCHER_DEFENCE = 3;
     public static final int LEGION_DEFENCE = 2;
     public static final int SETTLER_DEFENCE = 3;
+    public static final int B52_DEFENCE = 8;
 
     public static final int ARCHER_ATTACK = 2;
     public static final int LEGION_ATTACK = 4;
     public static final int SETTLER_ATTACK = 0;
+    public static final int B52_ATTACK = 1;
 
 
     // Valid terrain types
@@ -64,9 +67,20 @@ public class GameConstants {
                 return 15;
             case SETTLER:
                 return 30;
+            case B52:
+                return 60;
             default:
                 return 0;
 
+        }
+    }
+
+    public static boolean distanceMovingUnit (String unitType){
+        switch(unitType){
+            case GameConstants.B52:
+                return true;
+            default:
+                return false;
         }
     }
 

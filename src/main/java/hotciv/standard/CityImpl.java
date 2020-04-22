@@ -58,4 +58,12 @@ public class CityImpl implements City {
     public void setOwner(Player owner) {
         this.cityOwner = owner;
     }
+
+    public int getPopulation() {
+        return this.population;
+    }
+
+    public void incrementPopulation(int i) {
+        this.population += i;
+    }
 }

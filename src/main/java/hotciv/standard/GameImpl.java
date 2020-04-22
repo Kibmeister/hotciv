@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Skeleton implementation of HotCiv.
@@ -111,12 +112,23 @@ public class GameImpl implements Game {
     }
 
     public void unitReplacement(Position from, Position to) {
-        createUnit(to, getUnitAt(from));
-        deductMoveCount(to);
-        removeUnit(from);
-        setUnitOwner(to);
-        endOfTurn();
+
+        if (moveLongerDistance(from)) {
+            createUnit(to, getUnitAt(from));
+            deductMoveCount(to);
+            removeUnit(from);
+            setUnitOwner(to);
+        } else {
+            createUnit(to, getUnitAt(from));
+            deductMoveCount(to);
+            removeUnit(from);
+            setUnitOwner(to);
+            endOfTurn();
+
+        }
+
     }
+
 
 
     private void setUnitOwner(Position to) {
@@ -133,7 +145,9 @@ public class GameImpl implements Game {
 
         boolean typeMountain = world.get(to).getTypeString().equals(GameConstants.MOUNTAINS);
         boolean typeOcean = world.get(to).getTypeString().equals(GameConstants.OCEANS);
-        if (typeMountain || typeOcean) {
+        boolean b52Unit = units.get(from).getTypeString().equals(GameConstants.B52);
+
+        if ((typeMountain && !b52Unit) || (typeOcean && !b52Unit)) {
             return false;
         }
         boolean playerInTurnUnit = units.get(from).getOwner() == getPlayerInTurn();
@@ -191,6 +205,16 @@ public class GameImpl implements Game {
         }
     }
 
+    public boolean moveLongerDistance(Position from) {
+        boolean unitCanMoveALongerDistance = GameConstants.distanceMovingUnit(units.get(from).getTypeString());
+        if (unitCanMoveALongerDistance) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public void incrementMoveCount() {
         for (UnitImpl u : units.values()) {
             u.setMoveCount(1);
@@ -246,13 +270,19 @@ public class GameImpl implements Game {
     }
 
     private boolean validProduction(CityImpl c) {
-        if (c.getProduction().equals(GameConstants.ARCHER) ||
-                c.getProduction().equals(GameConstants.SETTLER) ||
-                c.getProduction().equals(GameConstants.LEGION)) {
-            return true;
-        } else {
-            return false;
+        switch (c.getProduction()) {
+            case GameConstants.ARCHER:
+                return true;
+            case GameConstants.SETTLER:
+                return true;
+            case GameConstants.LEGION:
+                return true;
+            case GameConstants.B52:
+                return true;
+            default:
+                return false;
         }
+
     }
 
     public void updateTreasury(CityImpl c) {
@@ -298,6 +328,19 @@ public class GameImpl implements Game {
         units.put(p, u);
     }
 
+  public boolean validPlacement(Position to, UnitImpl unitAt) {
+        if (cities.containsKey(to)) {
+            boolean cityOwnerEqualsUnitOwner = unitAt.getOwner().equals(cities.get(to).getOwner());
+            boolean b52OverFly = unitAt.getTypeString().equals(GameConstants.B52);
+            if (b52OverFly || cityOwnerEqualsUnitOwner) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
+
     public void createCity(Position p, CityImpl c) {
         cities.put(p, c);
     }
@@ -315,4 +358,11 @@ public class GameImpl implements Game {
         setGameLayoutStrategy();
     }
 
+    public void removeCity(Position p) {
+        cities.remove(p);
+    }
+
+    public  void changeTerrain(Position p, String s) {
+        world.put(p, new TileImpl(s));
+    }
 }

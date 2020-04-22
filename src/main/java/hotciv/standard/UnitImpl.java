@@ -14,9 +14,17 @@ public class UnitImpl implements Unit {
     public UnitImpl (Player unitOwner, String unitType){
         this.unitOwner = unitOwner;
         this.unitType = unitType;
-        moveCount = 1;
+        setUpMoveCount();
         unitAction = true;
         setUpStrength();
+    }
+
+    private void setUpMoveCount() {
+        if(unitType.equals(GameConstants.B52)){
+            moveCount = 2;
+        } else {
+            moveCount = 1;
+        }
     }
 
     private void setUpStrength() {
@@ -33,6 +41,9 @@ public class UnitImpl implements Unit {
                 defensiveStrength = GameConstants.SETTLER_DEFENCE;
                 attackingStrength = GameConstants.SETTLER_ATTACK;
                 break;
+            case GameConstants.B52:
+                defensiveStrength = GameConstants.B52_DEFENCE;
+                attackingStrength = GameConstants.B52_ATTACK;
         }
     }
 

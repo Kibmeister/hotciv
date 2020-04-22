@@ -10,5 +10,4 @@ Test list for HotCiv Delta
 [OK] There should be hills at 1dot3
 [OK] There are hills at all tiles (with custom layout)
 [OK] There is a forrest at 4 dot 4
-[] 
 

@@ -1,4 +1,4 @@
-Test list for HotCiv Gamma
+Test list for HotCiv Zeta
 ===================
 [OK] Zetaciv is identical to alphaciv 
 [OK] should be red as starting player 

@@ -82,4 +82,14 @@ public class GameDecorator implements Game {
     public void createCity(Position p, CityImpl c) {
         gameImpl.createCity(p, c);
     }
+
+    @Override
+    public void addObserver(GameObserver observer) {
+
+    }
+
+    @Override
+    public void setTileFocus(Position position) {
+
+    }
 }

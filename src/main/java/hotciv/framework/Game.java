@@ -145,6 +145,7 @@ public interface Game {
   public void createUnit(Position p, UnitImpl u);
 
   public void createCity(Position p, CityImpl c);
-
+  public void addObserver(GameObserver observer);
+  public void setTileFocus(Position position);
 
 }

@@ -1,0 +1,14 @@
+5RED changes production in a city at [4,1] to settler
+/BLUE
+/(hvis eiernen ikke er lik winneren: BLUE
+/"dette er hvis utenfor if'en: BLUE
+/BLUE
+/"dette er hvis utenfor if'en: BLUE
+/Dette er winneren: BLUE
+¯®BLUE
+¯®(hvis eiernen ikke er lik winneren: BLUE
+¯®"dette er hvis utenfor if'en: BLUE
+¯®BLUE
+¯®"dette er hvis utenfor if'en: BLUE
+¯®Dette er winneren: BLUE
+âá![mountain, ocean, plains, hills]

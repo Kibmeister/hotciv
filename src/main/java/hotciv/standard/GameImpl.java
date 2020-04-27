@@ -349,6 +349,16 @@ public class GameImpl implements Game {
         cities.put(p, c);
     }
 
+    @Override
+    public void addObserver(GameObserver observer) {
+
+    }
+
+    @Override
+    public void setTileFocus(Position position) {
+
+    }
+
     public void removeUnit(Position p) {
         units.remove(p);
     }

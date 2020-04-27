@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +45,7 @@ public class GameImpl implements Game {
     private UnitStrategy unitStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
     private AttackStrategy attackStrategy;
+    private ArrayList<GameObserver> observers;
 
 
     public GameImpl(GameFactory gameFactory) {
@@ -52,6 +54,7 @@ public class GameImpl implements Game {
         this.unitStrategy = gameFactory.createUnitStrategy();
         this.worldLayoutStrategy = gameFactory.createWorldLayoutStrategy();
         this.attackStrategy = gameFactory.createAttackStrategy();
+        this.observers = new ArrayList<>();
         main();
     }
 
@@ -89,12 +92,14 @@ public class GameImpl implements Game {
         if (!validMove(from, to)) {
             return false;
         }
+        worldChangedAt(from);
         boolean enemyUnit = units.containsKey(to);
         if (enemyUnit) {
             attackUnit(from, to);
             return true;
         }
         unitReplacement(from, to);
+
         return true;
     }
 
@@ -134,6 +139,7 @@ public class GameImpl implements Game {
     private void setUnitOwner(Position to) {
         if (cities.containsKey(to)) {
             cities.get(to).setOwner(units.get(to).getOwner());                  //the unit occupying the city becomes its owner
+            worldChangedAt(to);
         }
     }
 
@@ -203,6 +209,7 @@ public class GameImpl implements Game {
             setGameAge();
             roundEnded();
         }
+        turnEnds();
     }
 
     public boolean moveLongerDistance(Position from) {
@@ -224,6 +231,13 @@ public class GameImpl implements Game {
 
     public void roundEnded() {
         winnerStrategy.roundEnded(this);
+
+    }
+
+    private void turnEnds() {
+        for(GameObserver o: observers){
+            o.turnEnds(this.playerInTurn, this.gameAge);
+        }
     }
 
 
@@ -326,10 +340,12 @@ public class GameImpl implements Game {
 
     public void createTile(Position p, TileImpl t) {
         world.put(p, t);
+        worldChangedAt(p);
     }
 
     public void createUnit(Position p, UnitImpl u) {
         units.put(p, u);
+        worldChangedAt(p);
     }
 
   public boolean validPlacement(Position to, UnitImpl unitAt) {
@@ -347,16 +363,7 @@ public class GameImpl implements Game {
 
     public void createCity(Position p, CityImpl c) {
         cities.put(p, c);
-    }
-
-    @Override
-    public void addObserver(GameObserver observer) {
-
-    }
-
-    @Override
-    public void setTileFocus(Position position) {
-
+        worldChangedAt(p);
     }
 
     public void removeUnit(Position p) {
@@ -378,5 +385,23 @@ public class GameImpl implements Game {
 
     public  void changeTerrain(Position p, String s) {
         world.put(p, new TileImpl(s));
+        worldChangedAt(p);
+    }
+    public void worldChangedAt(Position from){
+        for(GameObserver o: observers ){
+            o.worldChangedAt(from);
+        }
+    }
+    @Override
+    public void addObserver(GameObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void setTileFocus(Position position) {
+        for(GameObserver o: observers){
+            o.tileFocusChangedAt(position);
+        }
+
     }
 }

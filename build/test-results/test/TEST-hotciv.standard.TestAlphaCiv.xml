@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="hotciv.standard.TestAlphaCiv" tests="44" skipped="0" failures="0" errors="0" timestamp="2020-04-27T17:35:11" hostname="KaspersMBP2015" time="0.02">
+<testsuite name="hotciv.standard.TestAlphaCiv" tests="44" skipped="0" failures="0" errors="0" timestamp="2020-04-27T17:45:18" hostname="KaspersMBP2015" time="0.018">
   <properties/>
   <testcase name="blueCanProduceLegion" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="shouldBeRedAsStartingPlayer" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="shouldBeRedAsStartingPlayer" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
   <testcase name="redCannotMoveBluesUnit" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="shouldOnlyProduceOneUnitOnOneAdjacentTileToCityAt10dot10" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="unistAreInitializedToMaximalMoveCountAtStartOfEachRound" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="unistAreInitializedToMaximalMoveCountAtStartOfEachRound" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
   <testcase name="redHasASettlerAt4dot3" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="mapShouldBeenCreated" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="tilesAreInGeneralOfTypePlain" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="tilesAreInGeneralOfTypePlain" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="citiesAccumulateProductionOverMoreRounds" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="anArcherCanOnlyMoveOneDistanceBetweenTwoTiles" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="anArcherCanOnlyMoveOneDistanceBetweenTwoTiles" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
   <testcase name="getUnitCostOfArcherIs10" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="hillAtTile0dot1" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="hillAtTile0dot1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="onlyPlayerInTurnCanMoveUnit" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="gameStartsInYear4000BC" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="redUnitAt4dot3AttacksAndDefeatsBluesUnitAt3dot2" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
@@ -20,17 +20,17 @@
   <testcase name="redCanProduceArcher" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="citiesPopulationSizeIsAlways1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="aCityPlacesTheUnitSetForProductionInTheCityIfNoOtherUnitPresent" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="citiesStayAtPopulation1" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="citiesStayAtPopulation1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="blueHasALegionAt3dot2" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="redCanProduceLegion" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="aCityPlacesTheUnitSetForProductionAroundTheCityWhenUnitIsAlreadyPresent" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="aCityPlacesTheUnitSetForProductionAroundTheCityWhenUnitIsAlreadyPresent" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="redHasACityAt1dot1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="blueHasACityAt4dot1" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="redHasAnArcherAt2dot0" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="blueHasACityAt4dot1" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="redHasAnArcherAt2dot0" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="blueUnitAt3dot2AttacksAndDefeatsRedUnitAt4dot3" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="mountainAt2dot2" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="tilePlainShouldBeTilePlain" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
-  <testcase name="moveUnitActuallyMovesTheUnit" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="tilePlainShouldBeTilePlain" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
+  <testcase name="moveUnitActuallyMovesTheUnit" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="citiesProduce6ProductionAfterEachRound" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="redWinsIn3000BC" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="theUnitCostIsDeductedFromTheCitiesTreasury" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
@@ -41,10 +41,10 @@
   <testcase name="redCanProduceSettler" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
   <testcase name="afterRedItIsBluesesTurn" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="blueCanProduceSettler" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="gameAdvances100YearsPerRound" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="gameAdvances100YearsPerRound" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="shouldSetProductionFocusForACity" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <testcase name="blueCanProduceArcher" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
-  <testcase name="moveCountHasToBeLargerThan0ForTheUnitToMove" classname="hotciv.standard.TestAlphaCiv" time="0.001"/>
+  <testcase name="moveCountHasToBeLargerThan0ForTheUnitToMove" classname="hotciv.standard.TestAlphaCiv" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,14 +1,10 @@
 package hotciv.visual;
 
+import hotciv.tools.SetFocusTool;
 import minidraw.standard.*;
 import minidraw.framework.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 import hotciv.framework.*;
-import hotciv.view.*;
 import hotciv.stub.*;
 
 /** Template code for exercise FRS 36.40.
@@ -39,6 +35,6 @@ public class ShowSetFocus {
     editor.showStatus("Click a tile to see Game's setFocus method being called.");
 
     // TODO: Replace the setting of the tool with your SetFocusTool implementation.
-    editor.setTool( new SelectionTool(editor) );
+    editor.setTool( new SetFocusTool(editor, game) );
   }
 }

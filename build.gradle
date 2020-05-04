@@ -40,6 +40,7 @@ dependencies {
 
     compile 'com.baerbak.maven:hotciv-fractal:1.0'
     compile 'com.baerbak.maven:minidraw:1.13'
+    compile 'com.baerbak.maven:broker:1.7'
 }
 
 // === Execution tasks - for running the various integration tests

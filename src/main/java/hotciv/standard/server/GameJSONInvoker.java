@@ -9,6 +9,7 @@ import hotciv.framework.*;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import hotciv.standard.client.OperationNames;
+import javafx.geometry.Pos;
 import jdk.nashorn.internal.parser.JSONParser;
 import sun.awt.shell.ShellFolder;
 
@@ -37,7 +38,7 @@ public class GameJSONInvoker implements Invoker {
         if (operationName.equals(OperationNames.GET_TILE_AT)) {
             // parameters array[0] = position row
             // array[1] = position columm
-            Position p = new Position(array.get(0).getAsInt(), array.get(1).getAsInt());
+            Position p = gson.fromJson(array.get(0), Position.class);
 
             String tileType = gameServant.getTileAt(p).getTypeString();
 
@@ -64,7 +65,8 @@ public class GameJSONInvoker implements Invoker {
             replyObject = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(playerInTurn));
 
         }if(operationName.equals(OperationNames.GET_UNIT_AT)){
-            Position p = new Position(array.get(0).getAsInt(), array.get(1).getAsInt());
+
+            Position p = gson.fromJson(array.get(0), Position.class);
             Unit unit = gameServant.getUnitAt(p);
 
             String[] arguments = {unit.getOwner().toString(), unit.getTypeString()};
@@ -72,7 +74,7 @@ public class GameJSONInvoker implements Invoker {
             replyObject = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(arguments));
         }
         if(operationName.equals(OperationNames.GET_CITY_AT)){
-            Position p = new Position(array.get(0).getAsInt(), array.get(1).getAsInt());
+            Position p = gson.fromJson(array.get(0), Position.class);
 
             String owner  = gameServant.getCityAt(p).getOwner().toString();
 

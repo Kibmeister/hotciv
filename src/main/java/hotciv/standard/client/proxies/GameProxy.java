@@ -31,8 +31,8 @@ public class GameProxy implements Game, ClientProxy {
 
     @Override
     public City getCityAt(Position p) {
-        String owner = requestor.sendRequestAndAwaitReply(p.toString(), OperationNames.GET_CITY_AT, String.class, null);
-        return new CityImpl(Player.valueOf(owner));
+        Player owner= requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_CITY_AT, Player.class, p);
+        return new CityImpl(owner);
     }
 
     @Override

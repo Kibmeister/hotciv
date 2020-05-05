@@ -39,6 +39,8 @@ public class HotCivClientTester {
         System.out.println("====================");
         System.out.println("The winner is: " + this.gameproxy.getWinner());
         System.out.println("====================");
+        System.out.println("The owner of city at 9 dot 9 is : " + this.gameproxy.getCityAt(new Position(9,9)).getOwner());
+        System.out.println("====================");
         System.out.println("Checking if Red player can move his unit: " + gameproxy.moveUnit(new Position(3,3), new Position(4,3)));
     }
 }

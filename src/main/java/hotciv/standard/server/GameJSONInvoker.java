@@ -13,6 +13,7 @@ import jdk.nashorn.internal.parser.JSONParser;
 import sun.awt.shell.ShellFolder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Array;
 import java.util.List;
 
 public class GameJSONInvoker implements Invoker {
@@ -30,6 +31,8 @@ public class GameJSONInvoker implements Invoker {
         ReplyObject replyObject = null;
         JsonParser parser = new JsonParser();
         JsonArray array = parser.parse(payload).getAsJsonArray(); // demarshall into JSON array
+
+
 
         if (operationName.equals(OperationNames.GET_TILE_AT)) {
             // parameters array[0] = position row
@@ -54,6 +57,7 @@ public class GameJSONInvoker implements Invoker {
             Integer age = gameServant.getAge();
 
             replyObject = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(age));
+
         } if(operationName.equals(OperationNames.GET_PLAYER_IN_TURN)){
             String playerInTurn = gameServant.getPlayerInTurn().toString();
 

@@ -8,7 +8,7 @@ import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.standard.client.proxies.CityProxy;
-import hotciv.standard.client.LocalMethodCallClientRequestHandler;
+import hotciv.stub.LocalMethodCallClientRequestHandler;
 import hotciv.standard.server.CityJSONInvoker;
 import hotciv.stub.StubCity3;
 import org.junit.Before;

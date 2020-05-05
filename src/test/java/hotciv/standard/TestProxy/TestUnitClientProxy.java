@@ -7,7 +7,7 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
-import hotciv.standard.client.LocalMethodCallClientRequestHandler;
+import hotciv.stub.LocalMethodCallClientRequestHandler;
 import hotciv.standard.server.UnitJSONInvoker;
 import hotciv.standard.client.proxies.UnitProxy;
 import hotciv.stub.StubUnit3;

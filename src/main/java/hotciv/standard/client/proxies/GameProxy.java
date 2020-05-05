@@ -37,13 +37,13 @@ public class GameProxy implements Game, ClientProxy {
 
     @Override
     public Player getPlayerInTurn() {
-        Player playerInTurn = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_PLAYER_IN_TURN, Player.class, null);
+        Player playerInTurn = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_PLAYER_IN_TURN, Player.class, (Object) null);
         return playerInTurn;
     }
 
     @Override
     public Player getWinner() {
-        Player winner = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_WINNER, Player.class, null);
+        Player winner = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_WINNER, Player.class, (Object) null);
 
         return winner;
     }

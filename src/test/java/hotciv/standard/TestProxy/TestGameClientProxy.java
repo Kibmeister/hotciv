@@ -8,7 +8,7 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.GameObserver;
 import hotciv.framework.Position;
 import hotciv.standard.client.proxies.GameProxy;
-import hotciv.standard.client.LocalMethodCallClientRequestHandler;
+import hotciv.stub.LocalMethodCallClientRequestHandler;
 import hotciv.standard.server.GameJSONInvoker;
 import hotciv.stub.NullObserver;
 import hotciv.stub.StubGame3;

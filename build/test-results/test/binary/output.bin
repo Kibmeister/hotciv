@@ -5,10 +5,46 @@
 /BLUE
 /"dette er hvis utenfor if'en: BLUE
 /Dette er winneren: BLUE
-³²BLUE
-³²(hvis eiernen ikke er lik winneren: BLUE
-³²"dette er hvis utenfor if'en: BLUE
-³²BLUE
-³²"dette er hvis utenfor if'en: BLUE
-³²Dette er winneren: BLUE
-æå![mountain, ocean, plains, hills]
+³²…This is the requestobject -> :RequestObject[operationName='game-get-tile-at', payload='null', objectId='[10,10]', versionIdentity=1]
+³²{This is the reply object <- :ReplyObject[payload='"mountain"', errorDescription='null', statusCode=200, versionIdentity=1]
+³²…This is the requestobject -> :RequestObject[operationName='game-get-tile-at', payload='null', objectId='[11,11]', versionIdentity=1]
+³²yThis is the reply object <- :ReplyObject[payload='"forest"', errorDescription='null', statusCode=200, versionIdentity=1]
+³´ƒThis is the requestobject -> :RequestObject[operationName='game-get-city-at', payload='null', objectId='[9,9]', versionIdentity=1]
+³´wThis is the reply object <- :ReplyObject[payload='"BLUE"', errorDescription='null', statusCode=200, versionIdentity=1]
+³µŠThis is the requestobject -> :RequestObject[operationName='game-get-age', payload='null', objectId='[no, parameters]', versionIdentity=1]
+³µvThis is the reply object <- :ReplyObject[payload='-4000', errorDescription='null', statusCode=200, versionIdentity=1]
+³¶•This is the requestobject -> :RequestObject[operationName='game-get-player-in-turn', payload='null', objectId='[no, parameters]', versionIdentity=1]
+³¶wThis is the reply object <- :ReplyObject[payload='"BLUE"', errorDescription='null', statusCode=200, versionIdentity=1]
+³·This is the requestobject -> :RequestObject[operationName='game-get-winner', payload='null', objectId='[no, parameters]', versionIdentity=1]
+³·xThis is the reply object <- :ReplyObject[payload='"GREEN"', errorDescription='null', statusCode=200, versionIdentity=1]
+³¸…This is the requestobject -> :RequestObject[operationName='game-get-unit-at', payload='null', objectId='[15,15]', versionIdentity=1]
+³¸‚This is the reply object <- :ReplyObject[payload='["BLUE","legion"]', errorDescription='null', statusCode=200, versionIdentity=1]
+º¹‘This is the requestobject -> :RequestObject[operationName='tile-get-typestring', payload='null', objectId='[no, parameters]', versionIdentity=1]
+º¹{This is the reply object <- :ReplyObject[payload='"mountain"', errorDescription='null', statusCode=200, versionIdentity=1]
+¼»‘This is the requestobject -> :RequestObject[operationName='unit-get-typestring', payload='null', objectId='[no, parameters]', versionIdentity=1]
+¼»zThis is the reply object <- :ReplyObject[payload='"settler"', errorDescription='null', statusCode=200, versionIdentity=1]
+¼½™This is the requestobject -> :RequestObject[operationName='unit-get-offensive-strength', payload='null', objectId='[no, parameters]', versionIdentity=1]
+¼½tThis is the reply object <- :ReplyObject[payload='999', errorDescription='null', statusCode=200, versionIdentity=1]
+¼¾This is the requestobject -> :RequestObject[operationName='unit-get-movecount', payload='null', objectId='[no, parameters]', versionIdentity=1]
+¼¾uThis is the reply object <- :ReplyObject[payload='1900', errorDescription='null', statusCode=200, versionIdentity=1]
+¼¿™This is the requestobject -> :RequestObject[operationName='unit-get-defensive-strength', payload='null', objectId='[no, parameters]', versionIdentity=1]
+¼¿tThis is the reply object <- :ReplyObject[payload='333', errorDescription='null', statusCode=200, versionIdentity=1]
+¼ÀŒThis is the requestobject -> :RequestObject[operationName='unit-get-owner', payload='null', objectId='[no, parameters]', versionIdentity=1]
+¼ÀwThis is the reply object <- :ReplyObject[payload='"BLUE"', errorDescription='null', statusCode=200, versionIdentity=1]
+ÂÁThis is the requestobject -> :RequestObject[operationName='city-get-treasury', payload='null', objectId='[no, parameters]', versionIdentity=1]
+ÂÁsThis is the reply object <- :ReplyObject[payload='10', errorDescription='null', statusCode=200, versionIdentity=1]
+ÂÃ‹This is the requestobject -> :RequestObject[operationName='city-get-size', payload='null', objectId='[no, parameters]', versionIdentity=1]
+ÂÃrThis is the reply object <- :ReplyObject[payload='3', errorDescription='null', statusCode=200, versionIdentity=1]
+ÂÄ‘This is the requestobject -> :RequestObject[operationName='city-get-production', payload='null', objectId='[no, parameters]', versionIdentity=1]
+ÂÄvThis is the reply object <- :ReplyObject[payload='"b52"', errorDescription='null', statusCode=200, versionIdentity=1]
+ÂÅŒThis is the requestobject -> :RequestObject[operationName='city-get-owner', payload='null', objectId='[no, parameters]', versionIdentity=1]
+ÂÅyThis is the reply object <- :ReplyObject[payload='"YELLOW"', errorDescription='null', statusCode=200, versionIdentity=1]
+ÂÆ–This is the requestobject -> :RequestObject[operationName='city-get-workforce-focus', payload='null', objectId='[no, parameters]', versionIdentity=1]
+ÂÆyThis is the reply object <- :ReplyObject[payload='"hammer"', errorDescription='null', statusCode=200, versionIdentity=1]
+ÈÇBLUE
+ÈÇ(hvis eiernen ikke er lik winneren: BLUE
+ÈÇ"dette er hvis utenfor if'en: BLUE
+ÈÇBLUE
+ÈÇ"dette er hvis utenfor if'en: BLUE
+ÈÇDette er winneren: BLUE
+ûú)[mountain, forest, ocean, plains, hills]

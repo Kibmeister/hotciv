@@ -6,7 +6,7 @@ import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Tile;
-import hotciv.standard.client.LocalMethodCallClientRequestHandler;
+import hotciv.stub.LocalMethodCallClientRequestHandler;
 import hotciv.standard.server.TileJSONInvoker;
 import hotciv.standard.client.proxies.TileProxy;
 import hotciv.stub.StubTile3;

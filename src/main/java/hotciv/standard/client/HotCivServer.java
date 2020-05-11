@@ -5,26 +5,28 @@ import frds.broker.ServerRequestHandler;
 import frds.broker.ipc.socket.SocketServerRequestHandler;
 import hotciv.framework.Game;
 import hotciv.standard.GameImpl;
+import hotciv.standard.factories.AlphaCivFactory;
 import hotciv.standard.factories.SemiCivFactory;
 import hotciv.standard.server.GameJSONInvoker;
+import hotciv.standard.server.GameRootInvoker;
 import hotciv.stub.StubGame3;
 
+import javax.rmi.CORBA.Stub;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 
-
 public class HotCivServer {
 
-    public static void main (String[] args) throws UnknownHostException {
-        new HotCivServer();}
+    public static void main(String[] args) throws UnknownHostException {
+        new HotCivServer();
+    }
 
-    public HotCivServer (){
+    public HotCivServer() {
         int port = 61934;
 
-        Game gameServant = new StubGame3();
-
-        Invoker invoker = new GameJSONInvoker(gameServant);
+        Game gameServant = new GameImpl(new SemiCivFactory());
+        Invoker invoker = new GameRootInvoker(gameServant);
         // a server requestHandler that takes a port and an invoker as parameters
 
         SocketServerRequestHandler socketServerRequestHandler = new SocketServerRequestHandler();
@@ -36,10 +38,6 @@ public class HotCivServer {
         socketServerRequestHandler.start();
 
     }
-
-
-
-
 
 
 }

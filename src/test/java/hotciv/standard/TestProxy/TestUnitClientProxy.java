@@ -4,12 +4,13 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
-import hotciv.framework.GameConstants;
-import hotciv.framework.Player;
-import hotciv.framework.Unit;
+import hotciv.framework.*;
+import hotciv.standard.server.GameRootInvoker;
+import hotciv.standard.server.NameServiceImpl;
 import hotciv.stub.LocalMethodCallClientRequestHandler;
 import hotciv.standard.server.UnitJSONInvoker;
 import hotciv.standard.client.proxies.UnitProxy;
+import hotciv.stub.StubGame3;
 import hotciv.stub.StubUnit3;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,19 +21,20 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class TestUnitClientProxy {
 
-    private Unit unit = new StubUnit3();
+    private Game gameServant;
     private UnitProxy unitProxy;
+    private GameRootInvoker invoker;
 
 
     @Before
     public void setUp(){
-        Unit unitServant = this.unit;
-        Invoker invoker = new UnitJSONInvoker(unitServant);
+        this.gameServant = new StubGame3();
+        this.invoker = new GameRootInvoker(gameServant);
 
         ClientRequestHandler clientRequestHandler = new LocalMethodCallClientRequestHandler(invoker);
         Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
-
-        this.unitProxy = new UnitProxy(requestor);
+        invoker.getNameService().putUnit("id", new StubUnit3());
+        this.unitProxy = new UnitProxy("id", requestor);
     }
 
     @Test

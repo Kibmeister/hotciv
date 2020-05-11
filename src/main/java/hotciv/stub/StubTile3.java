@@ -8,4 +8,9 @@ public class StubTile3 implements Tile {
     public String getTypeString() {
         return GameConstants.MOUNTAINS;
     }
+
+    @Override
+    public String getId() {
+        return null;
+    }
 }

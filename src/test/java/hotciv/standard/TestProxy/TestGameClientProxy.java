@@ -1,6 +1,7 @@
 package hotciv.standard.TestProxy;
 
 import frds.broker.ClientRequestHandler;
+import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
@@ -8,6 +9,8 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.GameObserver;
 import hotciv.framework.Position;
 import hotciv.standard.client.proxies.GameProxy;
+import hotciv.standard.server.GameRootInvoker;
+import hotciv.standard.server.NameServiceImpl;
 import hotciv.stub.LocalMethodCallClientRequestHandler;
 import hotciv.standard.server.GameJSONInvoker;
 import hotciv.stub.NullObserver;
@@ -29,9 +32,8 @@ public class TestGameClientProxy {
     @Before
     public void setUp() {
         Game gameServant = this.game;
-        GameJSONInvoker invoker = new GameJSONInvoker(gameServant);
+        Invoker invoker =  new GameRootInvoker(gameServant);
         GameObserver nullObserver = new NullObserver();
-
         ClientRequestHandler clientRequestHandler = new LocalMethodCallClientRequestHandler(invoker);
         Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
 

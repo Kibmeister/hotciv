@@ -4,12 +4,15 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
+import java.util.UUID;
+
 public class UnitImpl implements Unit {
 
     private Player unitOwner;
     private String unitType;
     private boolean unitAction;
     private int moveCount, defensiveStrength, attackingStrength;
+    private final String id;
 
     public UnitImpl (Player unitOwner, String unitType){
         this.unitOwner = unitOwner;
@@ -17,6 +20,7 @@ public class UnitImpl implements Unit {
         setUpMoveCount();
         unitAction = true;
         setUpStrength();
+        this.id = UUID.randomUUID().toString();
     }
 
     private void setUpMoveCount() {
@@ -86,5 +90,10 @@ public class UnitImpl implements Unit {
 
     public boolean getUnitAction() {
         return unitAction;
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 }

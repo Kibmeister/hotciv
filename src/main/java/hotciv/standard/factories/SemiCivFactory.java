@@ -4,6 +4,23 @@ import hotciv.framework.*;
 import hotciv.standard.*;
 
 public class SemiCivFactory implements GameFactory {
+    private String[] hills = new String[] {
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh",
+            "hhhhhhhhhhhhhhhh"};
 
     @Override
     public WinnerStrategy createWinnerStrategy() {

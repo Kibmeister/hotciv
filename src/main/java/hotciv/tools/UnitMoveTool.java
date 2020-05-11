@@ -19,6 +19,7 @@ public class UnitMoveTool extends SelectionTool {
         this.game = game;
     }
     public void mouseDown(MouseEvent e, int x, int y) {
+        super.mouseDown(e,x,y);
         Unit unitsAtPosition = game.getUnitAt(GfxConstants.getPositionFromXY(x,y));
         if(unitsAtPosition != null && unitsAtPosition.getOwner().equals(game.getPlayerInTurn())){
             dragStartPosition = GfxConstants.getPositionFromXY(x,y);

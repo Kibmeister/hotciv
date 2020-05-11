@@ -54,7 +54,8 @@ public class StubGame3 implements Game {
 
     @Override
     public boolean moveUnit(Position from, Position to) {
-        return false;
+        System.out.println("STUBGAME3 --> Move unit from : " + from + " to : " + to);
+        return true;
     }
 
     @Override

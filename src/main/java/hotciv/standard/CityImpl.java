@@ -4,16 +4,20 @@ import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
+import java.util.UUID;
+
 public class CityImpl implements City {
 
     private Player cityOwner;
     private String production;
     private int treasury, population;
+    private final String id;
 
     public CityImpl(Player cityOwner){
         this.cityOwner = cityOwner;
         this.population = 1;
         this.production = GameConstants.ARCHER;
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -48,6 +52,11 @@ public class CityImpl implements City {
     @Override
     public void setProduction(String t) {
         this.production = t;
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 
 

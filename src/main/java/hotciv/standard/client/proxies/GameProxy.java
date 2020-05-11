@@ -8,64 +8,84 @@ import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import hotciv.standard.client.OperationNames;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 public class GameProxy implements Game, ClientProxy {
     private Requestor requestor;
+    private List<GameObserver> observers;
 
     public GameProxy (Requestor requestor){
         this.requestor = requestor;
+        this.observers = new ArrayList<>();
     }
     @Override
     public Tile getTileAt(Position p) {
-        String type = requestor.sendRequestAndAwaitReply(p.toString(), OperationNames.GET_TILE_AT, String.class, null);
-
-        return new TileImpl(type);
+        String id = requestor.sendRequestAndAwaitReply("", OperationNames.GET_TILE_AT, String.class, p);
+        TileProxy tile = new TileProxy(id, requestor);
+        return tile;
     }
 
     @Override
     public Unit getUnitAt(Position p) {
-        List unit = requestor.sendRequestAndAwaitReply(p.toString(), OperationNames.GET_UNIT_AT, List.class, null);
-        return new UnitImpl(Player.valueOf(unit.get(0).toString()), unit.get(1).toString());
+        String id = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_UNIT_AT,String.class, p);
+        return new UnitProxy(id, requestor);
     }
 
     @Override
     public City getCityAt(Position p) {
-        Player owner= requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_CITY_AT, Player.class, p);
-        return new CityImpl(owner);
+        String id = requestor.sendRequestAndAwaitReply("", OperationNames.GET_CITY_AT, String.class, p);
+        City city = new CityProxy(id, requestor);
+        return city;
     }
 
     @Override
     public Player getPlayerInTurn() {
-        Player playerInTurn = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_PLAYER_IN_TURN, Player.class, (Object) null);
-        return playerInTurn;
+        Player p = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_PLAYER_IN_TURN, Player.class);
+        return p;
     }
 
     @Override
     public Player getWinner() {
-        Player winner = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_WINNER, Player.class, (Object) null);
+        Player winner = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.GET_WINNER, Player.class);
 
         return winner;
     }
 
     @Override
     public int getAge() {
-        int age = requestor.sendRequestAndAwaitReply("[no, parameters]" , OperationNames.GET_AGE, Integer.class, null);
+        int age = requestor.sendRequestAndAwaitReply("[no, parameters]" , OperationNames.GET_AGE, Integer.class);
         return age;
     }
 
     @Override
     public boolean moveUnit(Position from, Position to) {
-        return false;
+        Boolean move = requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.MOVE_UNIT, Boolean.class, from, to);
+
+        for(GameObserver o: observers){
+            o.tileFocusChangedAt(from);
+            o.tileFocusChangedAt(to);
+        }
+        return move;
     }
 
     @Override
     public void endOfTurn() {
+        requestor.sendRequestAndAwaitReply("[no, parameters]", OperationNames.END_OF_TURN, Player.class);
+
+        for(GameObserver o: observers){
+            o.turnEnds(getPlayerInTurn(), getAge());
+        }
 
     }
 
     @Override
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
+        requestor.sendRequestAndAwaitReply(
+                "",
+                OperationNames.CHANGE_WORKFORCE_FOCUS_IN_CITY_AT,
+                null, p, balance);
 
     }
 
@@ -89,13 +109,17 @@ public class GameProxy implements Game, ClientProxy {
 
     }
 
+
     @Override
     public void addObserver(GameObserver observer) {
-
+        observers.add(observer);
     }
 
     @Override
     public void setTileFocus(Position position) {
+        for(GameObserver o: observers){
+            o.tileFocusChangedAt(position);
+        }
 
     }
 }

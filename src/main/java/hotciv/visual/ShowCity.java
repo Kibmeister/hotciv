@@ -113,4 +113,9 @@ class CityStub implements City {
   public void setProduction(String t) {
 
   }
+
+  @Override
+  public String getId() {
+    return null;
+  }
 }

@@ -68,4 +68,6 @@ public interface Unit {
   /** retrieve the true/false of the units action */
   public boolean getUnitAction ();
 
+  public String getId();
+
 }

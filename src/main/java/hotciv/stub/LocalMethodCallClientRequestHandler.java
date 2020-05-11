@@ -18,7 +18,7 @@ public class LocalMethodCallClientRequestHandler implements ClientRequestHandler
         ReplyObject replyObject = invoker.handleRequest(
                 requestObject.getObjectId(),
                 requestObject.getOperationName(),
-                requestObject.getObjectId());
+                requestObject.getPayload());
         System.out.println("This is the reply object <- :" + replyObject);
         return replyObject;
     }

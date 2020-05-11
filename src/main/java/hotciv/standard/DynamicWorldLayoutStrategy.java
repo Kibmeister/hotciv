@@ -1,9 +1,6 @@
 package hotciv.standard;
 
-import hotciv.framework.GameConstants;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
-import hotciv.framework.WorldLayoutStrategy;
+import hotciv.framework.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,6 +68,8 @@ public class DynamicWorldLayoutStrategy implements WorldLayoutStrategy {
 
     @Override
     public HashMap<Position, UnitImpl> getUnitsLayout() {
+        units.put(new Position(3,3), new UnitImpl(Player.RED, GameConstants.ARCHER)); // for the sake of client tester : gradle hotcivClientTester
+        units.put(new Position(9,9), new UnitImpl(Player.BLUE, GameConstants.SETTLER));
         return units;
     }
 
@@ -78,6 +77,7 @@ public class DynamicWorldLayoutStrategy implements WorldLayoutStrategy {
     public HashMap<Position, CityImpl> getCitiesLayout() {
         cities.put(new Position(8,12), new CityImpl(Player.RED));
         cities.put(new Position(4,5), new CityImpl(Player.BLUE));
+        cities.get(new Position(4,5)).setProduction(GameConstants.B52);
         return cities;
     }
 }

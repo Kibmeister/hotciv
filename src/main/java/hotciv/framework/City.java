@@ -69,4 +69,6 @@ public interface City {
 
   public void setProduction (String t);
 
+  public String getId();
+
 }

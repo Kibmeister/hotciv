@@ -41,4 +41,9 @@ public class StubCity3 implements City {
     public void setProduction(String t) {
 
     }
+
+    @Override
+    public String getId() {
+        return null;
+    }
 }

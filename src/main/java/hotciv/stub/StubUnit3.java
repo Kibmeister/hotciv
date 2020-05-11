@@ -39,4 +39,9 @@ public class StubUnit3 implements Unit {
     public boolean getUnitAction() {
         return true;
     }
+
+    @Override
+    public String getId() {
+        return null;
+    }
 }

@@ -5,12 +5,15 @@ import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.City;
+import hotciv.framework.Game;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.standard.client.proxies.CityProxy;
+import hotciv.standard.server.GameRootInvoker;
 import hotciv.stub.LocalMethodCallClientRequestHandler;
 import hotciv.standard.server.CityJSONInvoker;
 import hotciv.stub.StubCity3;
+import hotciv.stub.StubGame3;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,18 +22,20 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class TestCityClientProxy {
 
-    private City city = new StubCity3();
+    private Game gameServant;
     private CityProxy cityProxy;
+    private GameRootInvoker invoker;
 
     @Before
     public void setUp () {
-        City cityServant = this.city;
-        Invoker invoker = new CityJSONInvoker(cityServant);
+        this.gameServant = new StubGame3();
+        this.invoker = new GameRootInvoker(gameServant);
         ClientRequestHandler clientRequestHandler = new LocalMethodCallClientRequestHandler(invoker);
 
         Requestor requestor = new StandardJSONRequestor(clientRequestHandler);
+        invoker.getNameService().putCity("id", new StubCity3());
 
-        cityProxy = new CityProxy(requestor);
+        cityProxy = new CityProxy("id",requestor);
     }
 
     @Test

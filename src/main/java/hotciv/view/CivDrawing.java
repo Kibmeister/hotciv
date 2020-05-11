@@ -103,7 +103,7 @@ public class CivDrawing
         // remove all unit figures in this drawing
         removeAllUnitFigures();
 
-        // iterate world, and create a unit figure for
+        // iterate world, and create a unit figure forw
         // each unit in the game world, as well as
         // create an association between the unit and
         // the unitFigure in 'unitFigureMap'.
@@ -113,19 +113,23 @@ public class CivDrawing
                 p = new Position(r, c);
                 Unit unit = game.getUnitAt(p);
                 if (unit != null) {
-                    String type = unit.getTypeString();
-                    // convert the unit's Position to (x,y) coordinates
-                    Point point = new Point(GfxConstants.getXFromColumn(p.getColumn()),
-                            GfxConstants.getYFromRow(p.getRow()));
-                    UnitFigure unitFigure =
-                            new UnitFigure(type, point, unit);
-                    unitFigure.addFigureChangeListener(this);
-                    unitFigureMap.put(unit, unitFigure);
+                    if (unit.getId() != null) {
+                        System.out.println("this is units owner " + unit.getOwner());
+                        String type = unit.getTypeString();
+                        // convert the unit's Position to (x,y) coordinates
+                        Point point = new Point(GfxConstants.getXFromColumn(p.getColumn()),
+                                GfxConstants.getYFromRow(p.getRow()));
+                        UnitFigure unitFigure =
+                                new UnitFigure(type, point, unit);
+                        unitFigure.addFigureChangeListener(this);
+                        unitFigureMap.put(unit, unitFigure);
 
-                    // also insert in delegate list as it is
-                    // this list that is iterated by the
-                    // graphics rendering algorithms
-                    delegate.add(unitFigure);
+                        // also insert in delegate list as it is
+                        // this list that is iterated by the
+                        // graphics rendering algorithms
+                        delegate.add(unitFigure);
+                    }
+
                 }
             }
         }
@@ -138,7 +142,7 @@ public class CivDrawing
      */
 
 
-  protected void defineCityMap() {
+    protected void defineCityMap() {
         clearSelection();
 
         // remove all city figures in this drawing
@@ -150,17 +154,20 @@ public class CivDrawing
                 p = new Position(r, c);
                 City city = game.getCityAt(p);
                 if (city != null) {
-                    // convert the cities position to (x,y) coordinates
-                    Point point = new Point(GfxConstants.getXFromColumn(p.getColumn()),
-                            GfxConstants.getYFromRow(p.getRow()));
-                    CityFigure cityFigure = new CityFigure(city, point);
-                    cityFigure.addFigureChangeListener(this);
-                    cityFigureMap.put(city, cityFigure);
+                    if(city.getId() != null){
+                        // convert the cities position to (x,y) coordinates
+                        Point point = new Point(GfxConstants.getXFromColumn(p.getColumn()),
+                                GfxConstants.getYFromRow(p.getRow()));
+                        CityFigure cityFigure = new CityFigure(city, point);
+                        cityFigure.addFigureChangeListener(this);
+                        cityFigureMap.put(city, cityFigure);
 
-                    // also insert in delegate list as it is
-                    // this list that is iterated by the
-                    // graphics rendering algorithms
-                    delegate.add(cityFigure);
+                        // also insert in delegate list as it is
+                        // this list that is iterated by the
+                        // graphics rendering algorithms
+                        delegate.add(cityFigure);
+                    }
+
                 }
             }
         }
@@ -168,7 +175,7 @@ public class CivDrawing
 
     }
 
-  protected void removeAllCityFigures() {
+    protected void removeAllCityFigures() {
         for (City c : cityFigureMap.keySet()) {
             CityFigure cf = cityFigureMap.get(c);
             delegate.remove(cf);
@@ -191,10 +198,18 @@ public class CivDrawing
         unitFigureMap.clear();
     }
 
-    protected ImageFigure turnShieldIcon, cityShieldIcon, unitsShieldIcon, cityWorkForceFocus, cityProduction;
+    protected ImageFigure turnShieldIcon, cityShieldIcon, unitsShieldIcon, cityWorkForceFocus, cityProduction, refreshIcon;
     protected TextFigure gameAgeText, unitMoveCountText;
 
     protected void defineIcons() {
+        refreshIcon =
+                new ImageFigure("refresh",
+                        new Point(GfxConstants.REFRESH_BUTTON_X,
+                                GfxConstants.REFRESH_BUTTON_Y));
+        delegate.add(refreshIcon);
+
+
+
         turnShieldIcon =
                 new ImageFigure("redshield",
                         new Point(GfxConstants.TURN_SHIELD_X,
@@ -279,7 +294,7 @@ public class CivDrawing
     public void tileFocusChangedAt(Position position) {
         // focus on a unit
         Unit unit = game.getUnitAt(position);
-        if (unit != null) {
+        if (unit.getId() != null) {
             unitMoveCountText.setText(String.valueOf(unit.getMoveCount()));
             String owner = unit.getOwner().toString().toLowerCase();
             unitsShieldIcon.set(owner + "shield",
@@ -290,7 +305,7 @@ public class CivDrawing
         // focus on city
 
         City city = game.getCityAt(position);
-        if(city != null){
+        if (city.getId() != null) {
             String owner = city.getOwner().toString().toLowerCase();
             cityShieldIcon.set(owner + "shield",
                     new Point(GfxConstants.CITY_SHIELD_X,
@@ -306,8 +321,6 @@ public class CivDrawing
 
         }
 
-        // TODO: Implementation pending
-        System.out.println("Fake it: tileFocusChangedAt " + position);
     }
 
     @Override
@@ -315,9 +328,10 @@ public class CivDrawing
         // A request has been issued to repaint
         // everything. We simply rebuild the
         // entire Drawing.
-        defineUnitMap();
+       // defineUnitMap();
         defineIcons();
         defineCityMap();
+        turnEnds(game.getPlayerInTurn(), game.getAge());
     }
 
     @Override

@@ -253,6 +253,11 @@ class StubCity implements City {
     public void setProduction(String t) {
 
     }
+
+    @Override
+    public String getId() {
+        return null;
+    }
 }
 
 class StubUnit implements Unit {
@@ -292,5 +297,10 @@ class StubUnit implements Unit {
     @Override
     public boolean getUnitAction() {
         return false;
+    }
+
+    @Override
+    public String getId() {
+        return null;
     }
 }

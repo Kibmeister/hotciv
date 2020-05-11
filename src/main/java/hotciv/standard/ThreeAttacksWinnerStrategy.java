@@ -7,25 +7,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ThreeAttacksWinnerStrategy implements WinnerStrategy {
-    private ArrayList<Player> battleWinners;
+    // private ArrayList<Player> battleWinners;
     private HashMap<Player, Integer> winners;
     private Player winner;
 
-    public ThreeAttacksWinnerStrategy(){
-        this.battleWinners = new ArrayList<>();
+    public ThreeAttacksWinnerStrategy() {
+        // this.battleWinners = new ArrayList<>();
         this.winners = new HashMap<>();
-
-
+        //this.winner = Player.RED;
     }
+
     @Override
-    public Player getWinner(GameImpl game) { return winner; }
+    public Player getWinner(GameImpl game) {
+        if (winner == null) {
+            this.winner = Player.GREEN;
+        }
+        return winner;
+    }
 
     @Override
     public void setWinner(Player battleWinner) {
 
         /*battleWinners.add(battleWinner);*/
 
-        if(winners.containsKey(battleWinner)){ // se om spilleren har vunnet før
+        if (winners.containsKey(battleWinner)) { // se om spilleren har vunnet før
             int currentNumberOfWins = winners.get(battleWinner); // isåfall, finn ut hvor mange wins han har
             winners.put(battleWinner, currentNumberOfWins + 1); // legg til antall wins + leg til et win
         } else {
@@ -63,7 +68,7 @@ public class ThreeAttacksWinnerStrategy implements WinnerStrategy {
 
     public void calculateWinner(Player battleWinner) {
         boolean weHaveAWinner = winners.get(battleWinner) >= 3;
-        if(weHaveAWinner){
+        if (weHaveAWinner) {
             winner = battleWinner;
         }
     }
